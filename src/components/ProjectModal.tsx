@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   X,
   ArrowRight,
@@ -51,6 +51,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSubmittingRef = useRef(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<{
     message: string;
@@ -69,6 +70,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
       }));
       setSubmitError(null);
       setValidationError(null);
+      isSubmittingRef.current = false;
     }
   }, [isOpen, defaultService, defaultPackage]);
 
@@ -76,7 +78,12 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSubmitting) return;
+    e.stopPropagation();
+
+    // Instant synchronous check to prevent double clicks and rapid duplicate triggers
+    if (isSubmittingRef.current || isSubmitting) return;
+    isSubmittingRef.current = true;
+    setIsSubmitting(true);
 
     setValidationError(null);
     setSubmitError(null);
@@ -144,6 +151,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
       });
     } finally {
       setIsSubmitting(false);
+      isSubmittingRef.current = false;
     }
   };
 
@@ -452,6 +460,12 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
+                  onClick={(e) => {
+                    if (isSubmitting || isSubmittingRef.current) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }
+                  }}
                   className="w-full py-3.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-black bg-[#d4af37] hover:bg-[#e5c07b] transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed shadow-md active:scale-[0.99]"
                 >
                   {isSubmitting ? (

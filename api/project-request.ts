@@ -30,6 +30,11 @@ const rateLimitMap = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
 const MAX_REQUESTS_PER_WINDOW = 5;
 
+// In-memory deduplication/idempotency cache to prevent duplicate email dispatches
+// Maps submission fingerprint -> { timestamp, result }
+const deduplicationMap = new Map<string, { timestamp: number; result: any }>();
+const DEDUPLICATION_WINDOW_MS = 60 * 1000; // 60 seconds idempotency window
+
 export const checkRateLimit = (clientIp: string): boolean => {
   const now = Date.now();
   const timestamps = rateLimitMap.get(clientIp) || [];
@@ -154,8 +159,37 @@ export default async function handler(req: any, res: any) {
       });
     }
 
+    // Idempotency check: prevent duplicate submissions sent within 60 seconds
+    const submissionFingerprint = `${sanitizedEmail.toLowerCase()}::${sanitizedService}::${sanitizedDescription.slice(0, 150)}`;
+    const now = Date.now();
+    const existingSubmission = deduplicationMap.get(submissionFingerprint);
+
+    if (existingSubmission && (now - existingSubmission.timestamp < DEDUPLICATION_WINDOW_MS)) {
+      console.log(`[Deduplication] Prevented duplicate email dispatch for: ${sanitizedEmail}`);
+      return res.status(200).json(existingSubmission.result);
+    }
+
+    // Temporarily record in-flight request to immediately absorb parallel identical requests
+    deduplicationMap.set(submissionFingerprint, {
+      timestamp: now,
+      result: {
+        success: true,
+        message: 'Thank you. Your project request has been sent successfully. We’ll review your requirements and get back to you.'
+      }
+    });
+
+    // Clean up expired entries if cache grows
+    if (deduplicationMap.size > 100) {
+      for (const [key, val] of deduplicationMap.entries()) {
+        if (now - val.timestamp > DEDUPLICATION_WINDOW_MS) {
+          deduplicationMap.delete(key);
+        }
+      }
+    }
+
     // Verify Resend API Key is present in server environment
     if (!isResendConfigured()) {
+      deduplicationMap.delete(submissionFingerprint);
       return res.status(503).json({
         success: false,
         error: 'Resend API key is not configured.',
@@ -313,6 +347,7 @@ Dispatched directly to ${recipientEmail}`;
     });
 
     if (error) {
+      deduplicationMap.delete(submissionFingerprint);
       console.error('[Resend Error]', error);
       return res.status(500).json({
         success: false,
@@ -321,11 +356,19 @@ Dispatched directly to ${recipientEmail}`;
       });
     }
 
-    return res.status(200).json({
+    const successResponse = {
       success: true,
       id: data?.id,
       message: 'Thank you. Your project request has been sent successfully. We’ll review your requirements and get back to you.'
+    };
+
+    // Retain success response in deduplication cache for the window duration
+    deduplicationMap.set(submissionFingerprint, {
+      timestamp: Date.now(),
+      result: successResponse
     });
+
+    return res.status(200).json(successResponse);
 
   } catch (err: unknown) {
     const errorMsg = err instanceof Error ? err.message : 'Internal Server Error';
