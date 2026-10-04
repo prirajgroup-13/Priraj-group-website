@@ -25,14 +25,98 @@ export const isResendConfigured = (): boolean => {
   return Boolean(process.env.RESEND_API_KEY && process.env.RESEND_API_KEY.trim() !== '');
 };
 
+// Obvious placeholder and test domains that should be rejected
+const BLOCKED_DOMAINS = new Set([
+  'example.com',
+  'example.org',
+  'example.net',
+  'test.com',
+  'test.org',
+  'test.net',
+  'localhost'
+]);
+
+/**
+ * Strict server-side email validation.
+ * Rejects:
+ * - Empty email or invalid types
+ * - Format violations (RFC 5322 standard)
+ * - Obvious placeholder/test domains (example.com, example.org, test.com, localhost, etc.)
+ * - Reserved TLDs (.test, .localhost, .example, .invalid)
+ * - Missing top-level domain or TLDs shorter than 2 letters
+ *
+ * NOTE: Format and syntax validity does not claim the address is verified or owned by the submitter.
+ */
+export const validateEmail = (email: unknown): { valid: boolean; reason?: string } => {
+  if (typeof email !== 'string') {
+    return { valid: false, reason: 'Email must be a string' };
+  }
+
+  const trimmed = email.trim().toLowerCase();
+  if (!trimmed || trimmed.length > 254) {
+    return { valid: false, reason: 'Invalid email length' };
+  }
+
+  // Standard RFC 5322 regex
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+  if (!emailRegex.test(trimmed)) {
+    return { valid: false, reason: 'Invalid email format' };
+  }
+
+  const atIndex = trimmed.lastIndexOf('@');
+  if (atIndex <= 0 || atIndex === trimmed.length - 1) {
+    return { valid: false, reason: 'Invalid email structure' };
+  }
+
+  const localPart = trimmed.slice(0, atIndex);
+  const domain = trimmed.slice(atIndex + 1);
+
+  if (localPart.length > 64 || domain.length > 255) {
+    return { valid: false, reason: 'Local part or domain too long' };
+  }
+
+  // Reject explicit placeholder domains
+  if (BLOCKED_DOMAINS.has(domain)) {
+    return { valid: false, reason: `Placeholder domain rejected: ${domain}` };
+  }
+
+  // Reject reserved RFC 2606 / 6761 special-use domains
+  if (
+    domain.endsWith('.localhost') ||
+    domain.endsWith('.test') ||
+    domain.endsWith('.example') ||
+    domain.endsWith('.invalid')
+  ) {
+    return { valid: false, reason: 'Special-use/reserved domain rejected' };
+  }
+
+  // Domain must contain at least one dot separating labels
+  const domainParts = domain.split('.');
+  if (domainParts.length < 2) {
+    return { valid: false, reason: 'Domain must contain a valid extension' };
+  }
+
+  const tld = domainParts[domainParts.length - 1];
+  if (!tld || tld.length < 2 || !/^[a-zA-Z]+$/.test(tld)) {
+    return { valid: false, reason: 'Invalid top-level domain' };
+  }
+
+  return { valid: true };
+};
+
 // In-memory rate limiting map: IP -> timestamp array
 const rateLimitMap = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
 const MAX_REQUESTS_PER_WINDOW = 5;
 
 // In-memory deduplication/idempotency cache to prevent duplicate email dispatches
-// Maps submission fingerprint -> { timestamp, result }
-const deduplicationMap = new Map<string, { timestamp: number; result: any }>();
+// Maps submission fingerprint -> { timestamp, inProgress, result }
+interface DeduplicationEntry {
+  timestamp: number;
+  inProgress?: boolean;
+  result: any;
+}
+const deduplicationMap = new Map<string, DeduplicationEntry>();
 const DEDUPLICATION_WINDOW_MS = 60 * 1000; // 60 seconds idempotency window
 
 export const checkRateLimit = (clientIp: string): boolean => {
@@ -45,6 +129,82 @@ export const checkRateLimit = (clientIp: string): boolean => {
   recentTimestamps.push(now);
   rateLimitMap.set(clientIp, recentTimestamps);
   return true;
+};
+
+/**
+ * Server-side anti-bot verification (Cloudflare Turnstile or Google reCAPTCHA).
+ * - Safe fallback: If neither TURNSTILE_SECRET_KEY nor RECAPTCHA_SECRET_KEY is defined,
+ *   the system relies on honeypot + IP rate limiting + email validation without breaking existing submissions.
+ * - When configured: Validates the token against the provider API before any email dispatch.
+ */
+export const verifyCaptchaToken = async (
+  token: unknown,
+  remoteIp: string
+): Promise<{ success: boolean; error?: string }> => {
+  const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+  const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
+
+  // Safe fallback if user hasn't configured CAPTCHA keys in environment variables
+  if (!turnstileSecret && !recaptchaSecret) {
+    return { success: true };
+  }
+
+  const tokenStr = typeof token === 'string' ? token.trim() : '';
+  if (!tokenStr) {
+    return {
+      success: false,
+      error: 'Bot verification token is missing. Please refresh and try again.'
+    };
+  }
+
+  try {
+    // Cloudflare Turnstile
+    if (turnstileSecret) {
+      const formData = new URLSearchParams();
+      formData.append('secret', turnstileSecret);
+      formData.append('response', tokenStr);
+      if (remoteIp && remoteIp !== 'unknown') {
+        formData.append('remoteip', remoteIp);
+      }
+
+      const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString()
+      });
+      const verifyData = (await verifyRes.json()) as { success?: boolean; 'error-codes'?: string[] };
+      if (!verifyData?.success) {
+        return { success: false, error: 'Anti-bot verification failed. Please try again.' };
+      }
+      return { success: true };
+    }
+
+    // Google reCAPTCHA
+    if (recaptchaSecret) {
+      const formData = new URLSearchParams();
+      formData.append('secret', recaptchaSecret);
+      formData.append('response', tokenStr);
+      if (remoteIp && remoteIp !== 'unknown') {
+        formData.append('remoteip', remoteIp);
+      }
+
+      const verifyRes = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString()
+      });
+      const verifyData = (await verifyRes.json()) as { success?: boolean; 'error-codes'?: string[] };
+      if (!verifyData?.success) {
+        return { success: false, error: 'Anti-bot verification failed. Please try again.' };
+      }
+      return { success: true };
+    }
+  } catch (err) {
+    console.error('[CAPTCHA Verification Error]', err);
+    return { success: false, error: 'Failed to verify anti-bot challenge. Please try again.' };
+  }
+
+  return { success: true };
 };
 
 // Vercel Serverless Function & Express Route Handler
@@ -62,12 +222,24 @@ export default async function handler(req: any, res: any) {
   // Support GET for diagnostic status check
   if (req.method === 'GET') {
     const configured = isResendConfigured();
+    const captchaProvider = process.env.TURNSTILE_SECRET_KEY
+      ? 'cloudflare-turnstile'
+      : process.env.RECAPTCHA_SECRET_KEY
+      ? 'recaptcha'
+      : 'honeypot-ratelimit-only';
+
     return res.status(200).json({
       status: 'ok',
       configured,
       provider: 'resend',
       sender: process.env.SMTP_FROM || 'PRIRAJ GROUP <hello@prirajgroup.com>',
       businessEmail: process.env.BUSINESS_EMAIL || 'prirajgroup@gmail.com',
+      antiSpam: {
+        honeypot: true,
+        rateLimiting: true,
+        emailDomainFilter: true,
+        captchaProvider
+      },
       requiredEnvVars: configured ? [] : ['RESEND_API_KEY']
     });
   }
@@ -101,12 +273,13 @@ export default async function handler(req: any, res: any) {
       budget,
       timeline,
       description,
-      _hp_company_url // Honeypot field for bot detection
+      _hp_company_url, // Honeypot field for bot detection
+      captcha_token    // Optional Turnstile / reCAPTCHA token
     } = body;
 
     // Honeypot check: Bots fill hidden fields
     if (_hp_company_url) {
-      // Silently accept bot submissions without dispatching
+      // Silently accept bot submissions without dispatching emails
       return res.status(200).json({ success: true, message: 'Request processed.' });
     }
 
@@ -120,9 +293,18 @@ export default async function handler(req: any, res: any) {
       });
     }
 
+    // Anti-bot CAPTCHA verification (if secret configured)
+    const captchaResult = await verifyCaptchaToken(captcha_token, String(clientIp));
+    if (!captchaResult.success) {
+      return res.status(403).json({
+        success: false,
+        error: captchaResult.error || 'Anti-bot verification failed.'
+      });
+    }
+
     // Required fields validation & sanitization
     const sanitizedName = sanitizeString(name, 100);
-    const sanitizedEmail = sanitizeString(email, 120);
+    const sanitizedEmail = sanitizeString(email, 120).toLowerCase();
     const sanitizedService = sanitizeString(service, 100);
     const sanitizedBudget = sanitizeString(budget, 100);
     const sanitizedDescription = sanitizeString(description, 3000);
@@ -137,11 +319,12 @@ export default async function handler(req: any, res: any) {
       });
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!sanitizedEmail || !emailRegex.test(sanitizedEmail)) {
+    // Strict server-side email validation per requirement 1
+    const emailValidation = validateEmail(sanitizedEmail);
+    if (!emailValidation.valid) {
       return res.status(400).json({
         success: false,
-        error: 'A valid email address is required.'
+        error: 'Please enter a valid email address.'
       });
     }
 
@@ -160,7 +343,7 @@ export default async function handler(req: any, res: any) {
     }
 
     // Idempotency check: prevent duplicate submissions sent within 60 seconds
-    const submissionFingerprint = `${sanitizedEmail.toLowerCase()}::${sanitizedService}::${sanitizedDescription.slice(0, 150)}`;
+    const submissionFingerprint = `${sanitizedEmail}::${sanitizedService}::${sanitizedDescription.slice(0, 150)}`;
     const now = Date.now();
     const existingSubmission = deduplicationMap.get(submissionFingerprint);
 
@@ -169,9 +352,10 @@ export default async function handler(req: any, res: any) {
       return res.status(200).json(existingSubmission.result);
     }
 
-    // Temporarily record in-flight request to immediately absorb parallel identical requests
+    // Immediately record an in-flight entry to absorb rapid parallel requests
     deduplicationMap.set(submissionFingerprint, {
       timestamp: now,
+      inProgress: true,
       result: {
         success: true,
         message: 'Thank you. Your project request has been sent successfully. We’ll review your requirements and get back to you.'
@@ -200,7 +384,9 @@ export default async function handler(req: any, res: any) {
 
     const recipientEmail = process.env.BUSINESS_EMAIL || 'prirajgroup@gmail.com';
     const senderFrom = process.env.SMTP_FROM || 'PRIRAJ GROUP <hello@prirajgroup.com>';
-    const emailSubject = `New Project Inquiry — ${sanitizedService} — PRIRAJ GROUP`;
+    
+    // Subject per requirement 2
+    const inquirySubject = 'New Project Inquiry — PRIRAJ GROUP';
 
     const submissionDate = new Date().toLocaleString('en-US', {
       timeZone: 'Asia/Kolkata',
@@ -208,8 +394,8 @@ export default async function handler(req: any, res: any) {
       timeStyle: 'medium'
     });
 
-    // Plain text email fallback
-    const emailPlainText = `PRIRAJ GROUP
+    // 1. Plain text version for PRIRAJ GROUP notification
+    const inquiryPlainText = `PRIRAJ GROUP
 New Project Inquiry
 
 Client Information
@@ -242,16 +428,16 @@ Submission Date & Time:
 ${submissionDate} (IST)
 
 SOURCE:
-PRIRAJ GROUP Website
+PRIRAJ GROUP Official Website
 Dispatched directly to ${recipientEmail}`;
 
-    // Clean, professional HTML email with PRIRAJ GROUP dark & gold theme
-    const emailHtml = `
+    // Professional HTML email with PRIRAJ GROUP dark & gold theme
+    const inquiryHtml = `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>${escapeHtml(emailSubject)}</title>
+  <title>${escapeHtml(inquirySubject)}</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #050508; color: #ededed; margin: 0; padding: 24px; }
     .container { max-width: 620px; margin: 0 auto; background-color: #0d0d12; border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
@@ -336,35 +522,114 @@ Dispatched directly to ${recipientEmail}`;
     // Initialize Resend SDK
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // Send email using verified sender domain and client email as reply-to
-    const { data, error } = await resend.emails.send({
+    // STEP 1: Send PRIRAJ GROUP notification email to BUSINESS_EMAIL
+    // Using verified sender domain and client email as reply-to
+    const { data: adminData, error: adminError } = await resend.emails.send({
       from: senderFrom,
       to: [recipientEmail],
       replyTo: sanitizedEmail,
-      subject: emailSubject,
-      text: emailPlainText,
-      html: emailHtml
+      subject: inquirySubject,
+      text: inquiryPlainText,
+      html: inquiryHtml
     });
 
-    if (error) {
+    if (adminError) {
+      // Remove in-flight lock on failure so the user can re-submit
       deduplicationMap.delete(submissionFingerprint);
-      console.error('[Resend Error]', error);
+      console.error('[Resend Error - Business Notification]', adminError);
       return res.status(500).json({
         success: false,
         error: 'Failed to send email via Resend.',
-        details: error.message
+        details: adminError.message
       });
+    }
+
+    // STEP 2: Send ONE client confirmation email (per requirement 3)
+    // Only executed after PRIRAJ GROUP notification is successfully accepted by Resend
+    const confirmationSubject = 'Thank you for contacting PRIRAJ GROUP';
+    
+    // Exact wording required by prompt
+    const confirmationPlainText = `Thank you for contacting PRIRAJ GROUP.
+
+We have received your project inquiry successfully.
+
+Our team will review your requirements and contact you shortly.
+
+Regards,
+PRIRAJ GROUP`;
+
+    const confirmationHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>${escapeHtml(confirmationSubject)}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #050508; color: #ededed; margin: 0; padding: 24px; }
+    .container { max-width: 580px; margin: 0 auto; background-color: #0d0d12; border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+    .header { background: linear-gradient(180deg, #171722 0%, #0d0d12 100%); padding: 32px 32px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); text-align: center; }
+    .gold-badge { display: inline-block; color: #d4af37; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+    .title { color: #ffffff; font-size: 22px; font-weight: 700; margin: 0; }
+    .content { padding: 32px; color: #d6d6dc; font-size: 15px; line-height: 1.7; }
+    .message-box { background-color: #14141d; border-left: 3px solid #d4af37; border-radius: 4px; padding: 18px 20px; margin: 20px 0; color: #f0f0f5; }
+    .footer { padding: 20px 32px; background-color: #07070a; border-top: 1px solid rgba(255, 255, 255, 0.06); font-size: 12px; color: #747486; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="gold-badge">PRIRAJ GROUP</div>
+      <h1 class="title">Inquiry Received</h1>
+    </div>
+    <div class="content">
+      <p style="margin-top: 0;">Thank you for contacting <strong>PRIRAJ GROUP</strong>.</p>
+      <div class="message-box">
+        <p style="margin: 0 0 12px 0;">We have received your project inquiry successfully.</p>
+        <p style="margin: 0;">Our team will review your requirements and contact you shortly.</p>
+      </div>
+      <p style="margin-bottom: 0;">Regards,<br><strong style="color: #d4af37;">PRIRAJ GROUP</strong></p>
+    </div>
+    <div class="footer">
+      PRIRAJ GROUP &middot; Excellence in Engineering &amp; Development
+    </div>
+  </div>
+</body>
+</html>`;
+
+    let clientConfirmationSent = false;
+    let clientConfirmationId: string | undefined;
+
+    try {
+      const { data: clientData, error: clientError } = await resend.emails.send({
+        from: senderFrom,
+        to: [sanitizedEmail],
+        subject: confirmationSubject,
+        text: confirmationPlainText,
+        html: confirmationHtml
+      });
+
+      if (clientError) {
+        console.warn('[Resend Warning - Client Confirmation]', clientError.message);
+      } else {
+        clientConfirmationSent = true;
+        clientConfirmationId = clientData?.id;
+      }
+    } catch (clientSendErr) {
+      console.warn('[Resend Warning - Client Confirmation Exception]', clientSendErr);
     }
 
     const successResponse = {
       success: true,
-      id: data?.id,
+      id: adminData?.id,
+      clientConfirmationSent,
+      clientConfirmationId,
       message: 'Thank you. Your project request has been sent successfully. We’ll review your requirements and get back to you.'
     };
 
-    // Retain success response in deduplication cache for the window duration
+    // Store completed success response in deduplication cache for the 60-second window
     deduplicationMap.set(submissionFingerprint, {
       timestamp: Date.now(),
+      inProgress: false,
       result: successResponse
     });
 

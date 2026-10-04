@@ -11,14 +11,29 @@ export const Process: React.FC = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const sectionHeight = rect.height;
-      const viewportHeight = window.innerHeight;
+      const viewportHeight = window.innerHeight || 800;
+
+      if (!sectionHeight || sectionHeight <= 0) return;
 
       // When section is in viewport
       if (rect.top <= viewportHeight * 0.6 && rect.bottom >= 0) {
         const scrolledDistance = viewportHeight * 0.6 - rect.top;
-        const progress = Math.min(Math.max(scrolledDistance / (sectionHeight * 0.8), 0), 1);
-        const stepIndex = Math.min(Math.floor(progress * PROCESS_DATA.length), PROCESS_DATA.length - 1);
-        setActiveStep(stepIndex);
+        const totalDistance = sectionHeight * 0.8;
+        if (totalDistance <= 0) return;
+
+        const rawProgress = scrolledDistance / totalDistance;
+        if (typeof rawProgress !== 'number' || Number.isNaN(rawProgress)) return;
+
+        const progress = Math.min(Math.max(rawProgress, 0), 1);
+        const totalSteps = PROCESS_DATA.length;
+        if (totalSteps <= 0) return;
+
+        const rawIndex = Math.floor(progress * totalSteps);
+        const stepIndex = Math.max(0, Math.min(rawIndex, totalSteps - 1));
+
+        if (!Number.isNaN(stepIndex) && Number.isFinite(stepIndex)) {
+          setActiveStep(stepIndex);
+        }
       }
     };
 
@@ -26,6 +41,23 @@ export const Process: React.FC = () => {
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Safe active step and current item resolution to completely prevent undefined errors
+  const safeActiveStep =
+    typeof activeStep === 'number' &&
+    !Number.isNaN(activeStep) &&
+    activeStep >= 0 &&
+    activeStep < PROCESS_DATA.length
+      ? activeStep
+      : 0;
+
+  const currentStep = PROCESS_DATA[safeActiveStep] || PROCESS_DATA[0] || {
+    step: '01',
+    number: '01 — DISCOVER',
+    title: 'DISCOVER',
+    desc: 'Understand the business, audience, requirements and goals.',
+    keyOutputs: ['Business Objective Alignment', 'Audience & Competitor Discovery', 'Clear Scope & Technical Roadmap']
+  };
 
   return (
     <section
@@ -53,15 +85,15 @@ export const Process: React.FC = () => {
           <div className="absolute top-1/2 left-0 right-0 h-[1.5px] -translate-y-1/2 bg-white/10 z-0" />
           <div
             className="absolute top-1/2 left-0 h-[2px] -translate-y-1/2 bg-gradient-to-r from-[#d4af37] to-[#fae8b4] transition-all duration-500 z-0"
-            style={{ width: `${((activeStep + 1) / PROCESS_DATA.length) * 100}%` }}
+            style={{ width: `${((safeActiveStep + 1) / Math.max(PROCESS_DATA.length, 1)) * 100}%` }}
           />
 
           {PROCESS_DATA.map((item, idx) => (
             <button
-              key={item.step}
+              key={item.step || idx}
               onClick={() => setActiveStep(idx)}
               className={`relative z-10 text-left p-4 rounded-xl transition-all duration-300 backdrop-blur-md cursor-pointer ${
-                activeStep === idx
+                safeActiveStep === idx
                   ? 'bg-[#15151e]/95 border border-[#d4af37]/60 shadow-[0_0_20px_-3px_rgba(212,175,55,0.25)]'
                   : 'bg-[#0d0d12]/60 border border-white/10 hover:border-white/20'
               }`}
@@ -69,7 +101,7 @@ export const Process: React.FC = () => {
               <div className="flex items-center justify-between mb-2">
                 <span
                   className={`text-xs font-mono font-bold ${
-                    activeStep === idx ? 'text-[#d4af37]' : 'text-neutral-500'
+                    safeActiveStep === idx ? 'text-[#d4af37]' : 'text-neutral-500'
                   }`}
                 >
                   {item.step}
@@ -91,27 +123,27 @@ export const Process: React.FC = () => {
             {/* Step Identification */}
             <div className="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-white/10 pb-6 lg:pb-0 lg:pr-8">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/30 text-xs font-mono text-[#f7edcd] mb-3">
-                <span>STAGE {PROCESS_DATA[activeStep].step}</span>
+                <span>STAGE {currentStep.step || '01'}</span>
                 <span>/</span>
                 <span>05</span>
               </div>
               <h3 className="font-display text-2xl sm:text-3xl font-bold text-white mb-3">
-                {PROCESS_DATA[activeStep].number}
+                {currentStep.number || ''}
               </h3>
               <p className="text-sm text-neutral-300 leading-relaxed">
-                {PROCESS_DATA[activeStep].desc}
+                {currentStep.desc || ''}
               </p>
 
               {/* Mobile Quick Step Buttons */}
               <div className="flex lg:hidden gap-1.5 mt-5">
                 {PROCESS_DATA.map((s, idx) => (
                   <button
-                    key={s.step}
+                    key={s.step || idx}
                     onClick={() => setActiveStep(idx)}
                     className={`h-2 flex-1 rounded-full transition-all cursor-pointer ${
-                      activeStep === idx ? 'bg-[#d4af37]' : 'bg-white/15'
+                      safeActiveStep === idx ? 'bg-[#d4af37]' : 'bg-white/15'
                     }`}
-                    aria-label={`Step ${s.step}`}
+                    aria-label={`Step ${s.step || idx + 1}`}
                   />
                 ))}
               </div>
@@ -123,7 +155,7 @@ export const Process: React.FC = () => {
                 Key Milestone Deliverables
               </h4>
               <div className="space-y-3">
-                {PROCESS_DATA[activeStep].keyOutputs.map((output, idx) => (
+                {(currentStep.keyOutputs || []).map((output, idx) => (
                   <div
                     key={idx}
                     className="flex items-start gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/5"

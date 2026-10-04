@@ -59,23 +59,46 @@ export const Contact: React.FC<ContactProps> = ({ preselectedService }) => {
     // Validate required fields
     if (!formData.name.trim() || formData.name.trim().length < 2) {
       setValidationError('Please enter your full name (minimum 2 characters).');
+      isSubmittingRef.current = false;
+      setIsSubmitting(false);
       return;
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
+
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+    const emailTrimmed = formData.email.trim().toLowerCase();
+    const domain = emailTrimmed.split('@')[1] || '';
+    const blockedDomains = ['example.com', 'example.org', 'example.net', 'test.com', 'test.org', 'test.net', 'localhost'];
+
+    if (
+      !emailTrimmed ||
+      !emailRegex.test(emailTrimmed) ||
+      blockedDomains.includes(domain) ||
+      domain.endsWith('.test') ||
+      domain.endsWith('.localhost') ||
+      domain.endsWith('.example')
+    ) {
       setValidationError('Please enter a valid email address.');
+      isSubmittingRef.current = false;
+      setIsSubmitting(false);
       return;
     }
+
     if (!formData.service) {
       setValidationError('Please select a service.');
+      isSubmittingRef.current = false;
+      setIsSubmitting(false);
       return;
     }
     if (!formData.budget) {
       setValidationError('Please select an estimated budget.');
+      isSubmittingRef.current = false;
+      setIsSubmitting(false);
       return;
     }
     if (!formData.description.trim() || formData.description.trim().length < 8) {
       setValidationError('Please provide a project description (minimum 8 characters).');
+      isSubmittingRef.current = false;
+      setIsSubmitting(false);
       return;
     }
 

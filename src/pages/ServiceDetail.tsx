@@ -289,20 +289,20 @@ export const ServiceDetail: React.FC<ServiceDetailProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            {service.process.map((step, idx) => (
+            {(service.process || []).map((step, idx) => (
               <div
                 key={idx}
                 className="p-5 rounded-2xl bg-[#0d0d12]/80 border border-white/10 flex flex-col justify-between"
               >
                 <div>
                   <div className="text-xs font-mono font-bold text-[#d4af37] mb-3">
-                    {step.step}
+                    {step?.step || `0${idx + 1}`}
                   </div>
                   <h4 className="font-display text-base font-bold text-white mb-2">
-                    {step.title}
+                    {step?.title || ''}
                   </h4>
                   <p className="text-xs text-neutral-400 leading-relaxed">
-                    {step.desc}
+                    {step?.desc || ''}
                   </p>
                 </div>
               </div>
