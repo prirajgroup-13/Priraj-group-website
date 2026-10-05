@@ -47,17 +47,25 @@ export const Process: React.FC = () => {
     typeof activeStep === 'number' &&
     !Number.isNaN(activeStep) &&
     activeStep >= 0 &&
+    Array.isArray(PROCESS_DATA) &&
     activeStep < PROCESS_DATA.length
       ? activeStep
       : 0;
 
-  const currentStep = PROCESS_DATA[safeActiveStep] || PROCESS_DATA[0] || {
+  const fallbackStep = {
     step: '01',
     number: '01 — DISCOVER',
     title: 'DISCOVER',
     desc: 'Understand the business, audience, requirements and goals.',
     keyOutputs: ['Business Objective Alignment', 'Audience & Competitor Discovery', 'Clear Scope & Technical Roadmap']
   };
+
+  const currentStep =
+    (Array.isArray(PROCESS_DATA) && PROCESS_DATA[safeActiveStep]) ||
+    (Array.isArray(PROCESS_DATA) && PROCESS_DATA[0]) ||
+    fallbackStep;
+
+  const processList = Array.isArray(PROCESS_DATA) && PROCESS_DATA.length > 0 ? PROCESS_DATA : [fallbackStep];
 
   return (
     <section
@@ -85,12 +93,12 @@ export const Process: React.FC = () => {
           <div className="absolute top-1/2 left-0 right-0 h-[1.5px] -translate-y-1/2 bg-white/10 z-0" />
           <div
             className="absolute top-1/2 left-0 h-[2px] -translate-y-1/2 bg-gradient-to-r from-[#d4af37] to-[#fae8b4] transition-all duration-500 z-0"
-            style={{ width: `${((safeActiveStep + 1) / Math.max(PROCESS_DATA.length, 1)) * 100}%` }}
+            style={{ width: `${((safeActiveStep + 1) / Math.max(processList.length, 1)) * 100}%` }}
           />
 
-          {PROCESS_DATA.map((item, idx) => (
+          {processList.map((item, idx) => (
             <button
-              key={item.step || idx}
+              key={item?.step || idx}
               onClick={() => setActiveStep(idx)}
               className={`relative z-10 text-left p-4 rounded-xl transition-all duration-300 backdrop-blur-md cursor-pointer ${
                 safeActiveStep === idx
@@ -104,14 +112,14 @@ export const Process: React.FC = () => {
                     safeActiveStep === idx ? 'text-[#d4af37]' : 'text-neutral-500'
                   }`}
                 >
-                  {item.step}
+                  {item?.step || `0${idx + 1}`}
                 </span>
               </div>
               <div className="font-display text-base font-bold text-white mb-1">
-                {item.title}
+                {item?.title || ''}
               </div>
               <div className="text-[11px] text-neutral-400 line-clamp-2 leading-relaxed">
-                {item.desc}
+                {item?.desc || ''}
               </div>
             </button>
           ))}
@@ -123,27 +131,27 @@ export const Process: React.FC = () => {
             {/* Step Identification */}
             <div className="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-white/10 pb-6 lg:pb-0 lg:pr-8">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/30 text-xs font-mono text-[#f7edcd] mb-3">
-                <span>STAGE {currentStep.step || '01'}</span>
+                <span>STAGE {currentStep?.step || '01'}</span>
                 <span>/</span>
                 <span>05</span>
               </div>
               <h3 className="font-display text-2xl sm:text-3xl font-bold text-white mb-3">
-                {currentStep.number || ''}
+                {currentStep?.number || ''}
               </h3>
               <p className="text-sm text-neutral-300 leading-relaxed">
-                {currentStep.desc || ''}
+                {currentStep?.desc || ''}
               </p>
 
               {/* Mobile Quick Step Buttons */}
               <div className="flex lg:hidden gap-1.5 mt-5">
-                {PROCESS_DATA.map((s, idx) => (
+                {processList.map((s, idx) => (
                   <button
-                    key={s.step || idx}
+                    key={s?.step || idx}
                     onClick={() => setActiveStep(idx)}
                     className={`h-2 flex-1 rounded-full transition-all cursor-pointer ${
                       safeActiveStep === idx ? 'bg-[#d4af37]' : 'bg-white/15'
                     }`}
-                    aria-label={`Step ${s.step || idx + 1}`}
+                    aria-label={`Step ${s?.step || idx + 1}`}
                   />
                 ))}
               </div>
@@ -155,7 +163,7 @@ export const Process: React.FC = () => {
                 Key Milestone Deliverables
               </h4>
               <div className="space-y-3">
-                {(currentStep.keyOutputs || []).map((output, idx) => (
+                {(currentStep?.keyOutputs || []).map((output, idx) => (
                   <div
                     key={idx}
                     className="flex items-start gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/5"

@@ -1,164 +1,262 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, ArrowRight, CheckCircle2, Shield, Layers, Code2, Sparkles, X, Eye, FileText } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, CheckCircle2, Eye, FileText, X, Sparkles } from 'lucide-react';
 import { PROJECTS_DATA } from '../data/content';
 import { ProjectItem } from '../types';
+import { useRouter } from '../router/Router';
 
 interface WorkProps {
   onOpenProjectModal: (serviceName?: string) => void;
 }
 
+type CategoryFilter = 'ALL' | 'WEB' | 'BOOKING' | 'PRODUCT' | 'E-COMMERCE' | 'UI/UX';
+
 export const Work: React.FC<WorkProps> = ({ onOpenProjectModal }) => {
+  const [selectedFilter, setSelectedFilter] = useState<CategoryFilter>('ALL');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+  const { navigate } = useRouter();
+
+  const filterTabs: CategoryFilter[] = ['ALL', 'WEB', 'BOOKING', 'PRODUCT', 'E-COMMERCE', 'UI/UX'];
+
+  const filteredProjects = PROJECTS_DATA.filter((project) => {
+    if (selectedFilter === 'ALL') return true;
+    if (selectedFilter === 'BOOKING') {
+      return project.tags.includes('BOOKING') || project.category.includes('BOOKING');
+    }
+    if (selectedFilter === 'PRODUCT') {
+      return project.tags.includes('PRODUCT') || project.category.includes('PRODUCT') || project.category.includes('FITNESS');
+    }
+    if (selectedFilter === 'WEB') {
+      return project.tags.includes('WEB') || project.category.includes('WEB');
+    }
+    if (selectedFilter === 'E-COMMERCE') {
+      return project.tags.includes('E-COMMERCE') || project.category.includes('E-COMMERCE');
+    }
+    if (selectedFilter === 'UI/UX') {
+      return project.tags.includes('UI/UX');
+    }
+    return true;
+  });
+
+  const handleProjectClick = (project: ProjectItem) => {
+    if (project.id === 'winter-arc') {
+      navigate('/work/winter-arc');
+    } else if (project.id === 'barber-booking') {
+      navigate('/work/barber-booking');
+    } else if (project.id === 'driving-school') {
+      navigate('/work/driving-school');
+    } else {
+      setSelectedProject(project);
+    }
+  };
 
   return (
     <section id="work" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 z-10">
       <div className="max-w-7xl mx-auto">
+        
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 sm:mb-20 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
           <div>
-            <div className="text-xs font-semibold tracking-widest uppercase text-[#d4af37] mb-3">
-              Selected Work
+            <div className="text-xs font-semibold tracking-widest uppercase text-[#d4af37] mb-2 font-mono">
+              Portfolio &amp; Case Studies
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
-              Selected Work
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-3">
+              OUR WORK
             </h2>
+            <p className="text-sm sm:text-base font-mono text-[#38bdf8] font-medium tracking-wide">
+              Digital experiences built for real-world use.
+            </p>
           </div>
-          <p className="text-base sm:text-lg text-neutral-400 max-w-md font-normal leading-relaxed">
-            Digital products and websites designed and developed by PRIRAJ GROUP.
+          <p className="text-base sm:text-lg text-neutral-300 max-w-lg font-normal leading-relaxed text-left md:text-right">
+            &ldquo;From transformation apps to business booking platforms, we design and build digital experiences that solve real problems.&rdquo;
           </p>
         </div>
 
-        {/* 3 Primary Project Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-          {PROJECTS_DATA.map((project) => (
-            <div
-              key={project.id}
-              className="group relative rounded-2xl bg-[#0d0d12]/90 hover:bg-[#12121a] border border-white/10 hover:border-[#d4af37]/50 overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.9),0_0_25px_-5px_rgba(212,175,55,0.18)] flex flex-col justify-between"
+        {/* Category Filter Tabs */}
+        <div className="flex items-center gap-1.5 p-1 bg-[#090d16]/80 border border-white/10 rounded-xl max-w-fit mb-12 overflow-x-auto">
+          {filterTabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setSelectedFilter(tab)}
+              className={`px-4 py-2 rounded-lg text-xs font-mono font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                selectedFilter === tab
+                  ? 'bg-[#d4af37] text-black shadow-md'
+                  : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
+              }`}
             >
-              {/* Image Preview Container */}
-              <div
-                onClick={() => setSelectedProject(project)}
-                className="relative aspect-[16/10] w-full overflow-hidden bg-[#16161f] border-b border-white/10 cursor-pointer"
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d12] via-transparent to-black/20 pointer-events-none" />
-
-                {/* Top Badges: REAL PROJECT / CONCEPT PROJECT */}
-                <div className="absolute top-3.5 left-3.5 z-10 flex flex-wrap items-center gap-2">
-                  <span
-                    className={`text-[10px] font-mono font-bold tracking-wider uppercase px-2.5 py-1 rounded-md shadow-md ${
-                      project.badgeType === 'REAL PROJECT'
-                        ? 'bg-[#d4af37] text-black'
-                        : 'bg-white/15 text-white backdrop-blur-md border border-white/20'
-                    }`}
-                  >
-                    {project.badgeType}
-                  </span>
-                  <span className="text-[11px] font-medium tracking-wide text-neutral-300 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
-                    {project.category}
-                  </span>
-                </div>
-
-                {/* Quick inspect hint on hover */}
-                <div className="absolute bottom-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#d4af37] text-black text-xs font-semibold shadow-lg">
-                    <span>Inspect UI</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between text-xs text-neutral-400 font-mono mb-2">
-                    <span className="text-neutral-400">{project.projectType}</span>
-                    <span className="text-[#d4af37]">{project.year}</span>
-                  </div>
-
-                  <h3
-                    onClick={() => setSelectedProject(project)}
-                    className="font-display text-xl sm:text-2xl font-bold text-white group-hover:text-[#f7edcd] transition-colors mb-3 cursor-pointer"
-                  >
-                    {project.title}
-                  </h3>
-
-                  <p className="text-sm text-neutral-300 leading-relaxed mb-6">
-                    {project.description}
-                  </p>
-                </div>
-
-                {/* Technology tags & Dual Actions */}
-                <div className="pt-5 border-t border-white/10 flex flex-col gap-4">
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.slice(0, 4).map((tech, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="text-[11px] px-2.5 py-1 rounded bg-white/[0.04] text-neutral-300 border border-white/5 font-mono"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Two Buttons: VIEW PROJECT & CASE STUDY */}
-                  <div className="grid grid-cols-2 gap-2.5 pt-2">
-                    <button
-                      onClick={() => setSelectedProject(project)}
-                      className="px-3 py-2.5 rounded-lg text-xs font-semibold text-neutral-200 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#d4af37]/40 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-                    >
-                      <Eye className="w-3.5 h-3.5 text-[#d4af37]" />
-                      <span>VIEW PROJECT</span>
-                    </button>
-                    <button
-                      onClick={() => setSelectedProject(project)}
-                      className="px-3 py-2.5 rounded-lg text-xs font-semibold text-black bg-[#d4af37] hover:bg-[#e5c07b] transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
-                    >
-                      <FileText className="w-3.5 h-3.5" />
-                      <span>CASE STUDY</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+              {tab}
+            </button>
           ))}
         </div>
 
-        {/* Global CTA strip */}
-        <div className="mt-16 text-center">
+        {/* Large Prominent Project Cards Showcase */}
+        <div className="space-y-12 sm:space-y-16">
+          {filteredProjects.map((project, idx) => {
+            const isWinterArc = project.id === 'winter-arc';
+            const isBarber = project.id === 'barber-booking';
+            const isDriving = project.id === 'driving-school';
+
+            return (
+              <div
+                key={project.id}
+                className={`group relative rounded-3xl bg-[#090d16]/85 hover:bg-[#0e1424]/95 border transition-all duration-300 overflow-hidden shadow-2xl ${
+                  isWinterArc
+                    ? 'border-[#d4af37]/40 hover:border-[#d4af37]/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_35px_-5px_rgba(212,175,55,0.2)]'
+                    : isBarber
+                    ? 'border-amber-500/25 hover:border-amber-400/60 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_30px_-5px_rgba(212,175,55,0.15)]'
+                    : isDriving
+                    ? 'border-[#38bdf8]/30 hover:border-[#38bdf8]/70 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_30px_-5px_rgba(56,189,248,0.15)]'
+                    : 'border-white/10 hover:border-[#d4af37]/50'
+                }`}
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-10 lg:p-12">
+                  
+                  {/* Left Column: Information & Specs */}
+                  <div className="lg:col-span-6 flex flex-col justify-between order-2 lg:order-1">
+                    <div>
+                      {/* Top Meta: Number, Unboxed Category, Year */}
+                      <div className="flex items-center gap-2.5 mb-4 text-xs font-mono">
+                        <span className="text-[#d4af37] font-bold text-sm">
+                          0{idx + 1}
+                        </span>
+                        <span className="text-neutral-600">/</span>
+                        <span className="text-neutral-300 font-semibold tracking-wider uppercase text-[11px]">
+                          {project.category}
+                        </span>
+                        {isWinterArc && (
+                          <>
+                            <span className="text-neutral-600">·</span>
+                            <span className="text-[#fae8b4] font-bold text-[10px] tracking-wider uppercase">
+                              FITNESS PRODUCT
+                            </span>
+                          </>
+                        )}
+                        {(isBarber || isDriving) && (
+                          <>
+                            <span className="text-neutral-600">·</span>
+                            <span className="text-[#38bdf8] font-bold text-[10px] tracking-wider uppercase">
+                              REAL BOOKING SYSTEM
+                            </span>
+                          </>
+                        )}
+                      </div>
+
+                      {/* Project Title */}
+                      <h3
+                        onClick={() => handleProjectClick(project)}
+                        className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white group-hover:text-[#fae8b4] transition-colors mb-4 cursor-pointer tracking-tight"
+                      >
+                        {project.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-sm sm:text-base text-neutral-300 leading-relaxed mb-6 font-normal">
+                        {project.description}
+                      </p>
+
+                      {/* Key Highlights / Features Preview */}
+                      <div className="space-y-2.5 mb-8">
+                        {project.keyFeatures.slice(0, 3).map((feat, fIdx) => (
+                          <div key={fIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-300">
+                            <CheckCircle2 className="w-4 h-4 text-[#d4af37] shrink-0 mt-0.5" />
+                            <span>{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Unboxed Metadata Tags */}
+                      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 mb-8 text-[11px] font-mono text-neutral-400">
+                        {project.tags.map((tag, tIdx) => (
+                          <React.Fragment key={tag}>
+                            <span className="hover:text-neutral-200 transition-colors">{tag}</span>
+                            {tIdx < project.tags.length - 1 && (
+                              <span className="text-neutral-600 select-none">·</span>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="pt-6 border-t border-white/10 flex flex-wrap items-center gap-4">
+                      <button
+                        onClick={() => handleProjectClick(project)}
+                        className="group/btn inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-black bg-[#d4af37] hover:bg-[#e5c07b] transition-all shadow-md cursor-pointer whitespace-nowrap"
+                      >
+                        <span>VIEW CASE STUDY</span>
+                        <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                      </button>
+
+                      <button
+                        onClick={() => onOpenProjectModal(project.title)}
+                        className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-neutral-300 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 transition-colors cursor-pointer whitespace-nowrap"
+                      >
+                        <span>Build Similar Project</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Large Premium Visual Presentation */}
+                  <div
+                    onClick={() => handleProjectClick(project)}
+                    className="lg:col-span-6 relative rounded-2xl overflow-hidden bg-[#06080e] border border-white/10 aspect-[16/10] cursor-pointer order-1 lg:order-2 group/img shadow-xl"
+                  >
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
+                      loading="lazy"
+                    />
+
+                    {/* Subtle Scrim */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+
+                    {/* Quick Explore Float Badge on hover */}
+                    <div className="absolute bottom-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/80 backdrop-blur-md border border-white/20 text-xs font-mono text-white opacity-90 group-hover/img:opacity-100 transition-opacity">
+                      <span>Explore Case Study</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-[#d4af37]" />
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Post-Portfolio Conversion Block (Requirement 12) */}
+        <div className="mt-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#0d1424] to-[#070b14] border border-[#38bdf8]/30 shadow-2xl text-center max-w-4xl mx-auto">
+          <div className="text-xs font-mono font-semibold uppercase tracking-widest text-[#38bdf8] mb-2">
+            Real Work &middot; Real Business Solutions
+          </div>
+          <h3 className="font-display text-2xl sm:text-4xl font-extrabold text-white mb-3 tracking-tight">
+            HAVE A BUSINESS IDEA?
+          </h3>
+          <p className="text-sm sm:text-base text-neutral-300 max-w-lg mx-auto mb-8 leading-relaxed">
+            Let&apos;s build the digital experience around it. From booking platforms to high-performance business flagships.
+          </p>
           <button
             onClick={() => onOpenProjectModal()}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-xs font-semibold text-neutral-200 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#d4af37]/40 transition-all backdrop-blur-md cursor-pointer"
+            className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl text-xs font-bold tracking-wider uppercase text-black bg-[#d4af37] hover:bg-[#e5c07b] transition-all shadow-lg hover:shadow-[0_0_30px_0_rgba(212,175,55,0.5)] cursor-pointer"
           >
-            <span>Have a project or website you want us to build?</span>
-            <span className="text-[#d4af37] font-bold">Start a Project &rarr;</span>
+            <span>START A PROJECT</span>
+            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
           </button>
         </div>
+
       </div>
 
-      {/* Case Study Detail Modal */}
+      {/* Case Study Modal for Novia, Influence */}
       {selectedProject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-xl animate-fade-in">
           <div
-            className="relative w-full max-w-3xl rounded-2xl bg-[#0d0d12] border border-white/15 p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[92vh]"
+            className="relative w-full max-w-3xl rounded-3xl bg-[#090d16] border border-white/15 p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[92vh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
             <div className="flex items-start justify-between pb-4 mb-6 border-b border-white/10 gap-4">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span
-                    className={`text-[11px] font-mono font-bold tracking-wider uppercase px-2.5 py-0.5 rounded ${
-                      selectedProject.badgeType === 'REAL PROJECT'
-                        ? 'bg-[#d4af37] text-black'
-                        : 'bg-white/15 text-white border border-white/20'
-                    }`}
-                  >
+                  <span className="text-[11px] font-mono font-bold tracking-wider uppercase px-2.5 py-0.5 rounded bg-[#d4af37] text-black">
                     {selectedProject.badgeType}
                   </span>
                   <span className="text-xs font-mono text-neutral-400">
@@ -180,8 +278,7 @@ export const Work: React.FC<WorkProps> = ({ onOpenProjectModal }) => {
 
             {/* Modal Content */}
             <div className="space-y-6">
-              {/* Full Width Project Screenshot */}
-              <div className="rounded-xl overflow-hidden border border-white/10 bg-[#08080c] shadow-lg">
+              <div className="rounded-xl overflow-hidden border border-white/10 bg-[#06080e] shadow-lg">
                 <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
@@ -189,7 +286,6 @@ export const Work: React.FC<WorkProps> = ({ onOpenProjectModal }) => {
                 />
               </div>
 
-              {/* Overview & Objective */}
               <div>
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-[#d4af37] mb-2 font-mono">
                   Project Overview
@@ -199,7 +295,6 @@ export const Work: React.FC<WorkProps> = ({ onOpenProjectModal }) => {
                 </p>
               </div>
 
-              {/* Problem vs Approach Breakdown */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
                   <h5 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2 font-mono">
@@ -211,7 +306,7 @@ export const Work: React.FC<WorkProps> = ({ onOpenProjectModal }) => {
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
                   <h5 className="text-xs font-semibold uppercase tracking-wider text-[#d4af37] mb-2 font-mono">
-                    Our Engineering Approach
+                    Engineering Approach
                   </h5>
                   <p className="text-xs text-neutral-300 leading-relaxed">
                     {selectedProject.approach}
@@ -219,22 +314,20 @@ export const Work: React.FC<WorkProps> = ({ onOpenProjectModal }) => {
                 </div>
               </div>
 
-              {/* Key Features */}
               <div>
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-3 font-mono">
-                  Engineered Features &amp; Modules
+                  Key Features &amp; Modules
                 </h4>
                 <div className="space-y-2">
-                  {selectedProject.keyFeatures.map((feature, fIdx) => (
+                  {selectedProject.keyFeatures.map((feat, fIdx) => (
                     <div key={fIdx} className="flex items-start gap-2.5 text-xs text-neutral-300">
                       <CheckCircle2 className="w-4 h-4 text-[#d4af37] shrink-0 mt-0.5" />
-                      <span>{feature}</span>
+                      <span>{feat}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Technical Stack Tags */}
               <div>
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2 font-mono">
                   Technology Stack
@@ -243,7 +336,7 @@ export const Work: React.FC<WorkProps> = ({ onOpenProjectModal }) => {
                   {selectedProject.technologies.map((tech, tIdx) => (
                     <span
                       key={tIdx}
-                      className="px-2.5 py-1 rounded bg-[#14141c] text-xs font-mono text-neutral-300 border border-white/10"
+                      className="px-2.5 py-1 rounded bg-[#131b2e] text-xs font-mono text-neutral-300 border border-white/10"
                     >
                       {tech}
                     </span>
@@ -255,15 +348,15 @@ export const Work: React.FC<WorkProps> = ({ onOpenProjectModal }) => {
             {/* Modal Footer CTA */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 mt-6 border-t border-white/10">
               <div className="text-xs text-neutral-400 text-center sm:text-left">
-                Ready to build a similar website or application for your business?
+                Want PRIRAJ GROUP to build a similar project for your business?
               </div>
               <button
                 onClick={() => {
-                  const targetType = selectedProject.id === 'influence' ? 'Website' : 'Web Application';
+                  const targetType = selectedProject.title;
                   setSelectedProject(null);
                   onOpenProjectModal(targetType);
                 }}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl font-semibold text-xs text-black bg-[#d4af37] hover:bg-[#e5c07b] transition-colors cursor-pointer shadow-md"
+                className="w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider text-black bg-[#d4af37] hover:bg-[#e5c07b] transition-colors cursor-pointer shadow-md"
               >
                 Discuss This Project Scope &rarr;
               </button>

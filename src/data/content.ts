@@ -10,169 +10,213 @@ export const OFFICIAL_CONTACT = {
   instagramUrl: 'https://www.instagram.com/priraj_group?stkn=MTAzOXhkcjh6aXB4cQ%3D%3D&utm_source=qr'
 };
 
+export const FOUNDER_INFO = {
+  name: 'ANGATDEEP SINGH',
+  role: 'FOUNDER & CEO',
+  company: 'PRIRAJ GROUP',
+  image: '/assets/founder-angatdeep-singh.jpg',
+  fallbackImage: '/assets/founder.jpg',
+  bio: 'Building modern digital experiences with design, technology and real-world usability.',
+  mission: 'Angatdeep Singh is the founder of PRIRAJ GROUP, focused on building modern digital experiences that combine strong design, practical technology and real-world usability. We do not build disposable websites or bloated templates. Every digital flagship we engineer is tailored around distinct aesthetic identity, measurable conversion, and lasting technical performance.'
+};
+
 export const SERVICE_OPTIONS = [
-  'Website Development',
-  'Web Application Development',
-  'UI/UX Design',
-  'E-commerce Development',
-  'Branding & Digital Identity',
-  'Custom Digital Solutions',
+  'Business Websites',
+  'Custom Websites',
+  'E-commerce',
+  'UI / UX Design',
+  'Web Development',
+  'Custom Features',
   'Other'
 ] as const;
 
 export const BUDGET_OPTIONS = [
-  'Simple Website — ₹8,000–₹9,000',
-  '3D Website — ₹15,000–₹20,000',
-  "Custom / Larger Project — Let's Discuss",
-  'Not Sure'
+  'Starter — ₹8,000–₹10,000',
+  'Business — ₹15,000–₹20,000',
+  'Premium — ₹20,000–₹35,000+',
+  'E-commerce — ₹40,000–₹70,000+',
+  "Custom / Larger Project — Let's Discuss"
 ] as const;
 
 export const SERVICES_DATA: ServiceItem[] = [
   {
-    id: 'website-development',
-    slug: 'website-development',
-    route: '/services/website-development',
+    id: 'business-websites',
+    slug: 'business-websites',
+    route: '/services/business-websites',
     number: '01',
-    title: 'Website Development',
-    shortDesc: 'Modern, high-performance responsive business websites engineered for speed, conversion, and online authority.',
-    heroTitle: 'Websites Designed to Make Your Business Stand Out.',
-    heroSubtitle: 'PRIRAJ GROUP creates modern, responsive websites focused on design, usability, performance, and measurable business goals.',
-    fullDesc: 'We architect and build bespoke corporate, agency, portfolio, and brand websites with clean modern code, fast loading speeds, mobile-first responsiveness, and structured SEO foundations.',
+    title: 'Business Websites',
+    shortDesc: 'Credible, modern online hubs for local and service businesses that build immediate client trust and drive conversion.',
+    heroTitle: 'Business Websites Engineered for Authority and Growth.',
+    heroSubtitle: 'PRIRAJ GROUP builds modern, responsive business websites that turn first-time visitors into paying clients.',
+    fullDesc: 'We architect and build bespoke corporate, agency, and business websites with clean modern code, fast loading speeds, mobile-first responsiveness, and structured SEO foundations.',
     offerings: [
-      { title: 'Business Websites', desc: 'Credible, modern online hubs for local and service businesses that build immediate client trust.' },
-      { title: 'Corporate Websites', desc: 'Comprehensive multi-page portals for growing companies and established organizations.' },
-      { title: 'Portfolio Websites', desc: 'High-impact editorial showcases for creators, architects, agencies, and studios.' },
-      { title: 'Landing Pages', desc: 'High-converting campaign landing pages built for marketing launches and customer acquisition.' },
-      { title: 'Personal Brand Websites', desc: 'Authoritative personal flagships for founders, executives, consultants, and leaders.' },
-      { title: 'Custom Website Experiences', desc: 'Interactive digital environments tailored around distinct brand storytelling.' },
-      { title: 'Responsive Development', desc: 'Pixel-perfect ergonomics across smartphones, tablets, laptops, and ultra-wide screens.' },
-      { title: 'Performance Optimization', desc: 'Sub-second first paint, optimized media assets, and lightning-fast page transitions.' },
-      { title: 'SEO Foundation', desc: 'Semantic HTML5 structure, schema metadata, open graph cards, and search console optimization.' },
-      { title: 'Animations & Interactions', desc: 'Smooth, lightweight scroll interactions and motion design that feel refined and purposeful.' }
+      { title: 'Company Flagships', desc: 'Credible, modern online hubs for businesses that establish commanding market authority.' },
+      { title: 'Lead Generation Pages', desc: 'High-converting landing pages built for campaign launches and inbound client capture.' },
+      { title: 'Corporate Portals', desc: 'Multi-page digital architectures structured for established firms and growing businesses.' },
+      { title: 'SEO Architecture', desc: 'Semantic HTML5 structure, schema metadata, open graph cards, and Google search readiness.' },
+      { title: 'Responsive Ergonomics', desc: 'Pixel-perfect usability across smartphones, tablets, laptops, and ultra-wide screens.' },
+      { title: 'Speed Optimization', desc: 'Sub-second first paint, optimized media assets, and lightning-fast edge delivery.' }
     ],
     deliverables: [
-      'Responsive Web Flagship',
-      'Clean Modular JavaScript / React Code',
+      'Custom Responsive Business Website',
+      'Clean Modular JavaScript / React Architecture',
       'Sub-Second First Contentful Paint',
-      'Structured SEO & Metadata Setup',
-      'Contact & Lead Capture Funnels',
-      'Deployment & Hosting Configuration'
+      'Structured SEO & Schema Setup',
+      'Direct Lead Capture & Inquiry Forms',
+      'Domain Setup & Production Deployment'
     ],
     capabilities: [
-      'Mobile-First Responsive Layouts',
-      'Zero-Bloat Performance Engineering',
-      'WCAG AA Accessibility Standards',
-      'Production Domain & SSL Setup'
+      'Mobile-First Layouts',
+      'Conversion Rate Optimization',
+      'WCAG AA Accessibility',
+      'Edge CDN Hosting Setup'
     ],
     process: [
       { step: '01', title: 'Discovery & Scope', desc: 'Understand your audience, brand positioning, required pages, and conversion goals.' },
       { step: '02', title: 'Wireframes & UI', desc: 'Craft modern layouts with typographic balance and responsive hierarchy.' },
-      { step: '03', title: 'Frontend Engineering', desc: 'Develop clean, modular JavaScript code with instant page load speeds.' },
-      { step: '04', title: 'Testing & Optimization', desc: 'Test across browsers, audit Core Web Vitals, and calibrate SEO metadata.' },
-      { step: '05', title: 'Launch & Handoff', desc: 'Deploy to fast edge hosting, connect domains, and provide straightforward maintenance guidance.' }
+      { step: '03', title: 'Engineering', desc: 'Develop clean, modular code with instant page load speeds.' },
+      { step: '04', title: 'Testing & QA', desc: 'Test across mobile and desktop browsers, audit Core Web Vitals, and calibrate SEO.' },
+      { step: '05', title: 'Launch & Handoff', desc: 'Deploy to fast edge hosting, connect custom domains, and provide ongoing support.' }
     ],
-    technologies: ['React', 'JavaScript', 'Next.js', 'Tailwind CSS', 'Vite', 'Edge CDN', 'Framer Motion'],
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'Vite', 'Edge Hosting'],
     pricingStarting: 'Starting from ₹8,000–₹10,000',
     pricingNote: 'Final pricing depends on page count, interactive features, animations, and custom integrations.',
     relevantProjectId: 'influence',
     relevantProjectLabel: 'Selected Project',
     faqs: [
       {
-        question: 'How long does a typical website project take?',
-        answer: 'Starter websites (3–5 pages) are typically delivered in 1–2 weeks. Larger business websites (5–10 pages) with custom animations and integrations typically take 2–3 weeks.'
+        question: 'How long does a business website take to build?',
+        answer: 'Starter websites (3–5 pages) typically deliver in 1–2 weeks. Larger business websites (5–10 pages) with custom animations and integrations typically take 2–3 weeks.'
       },
       {
-        question: 'Will my website work perfectly on mobile devices?',
-        answer: 'Yes. Every website we build is engineered mobile-first and tested thoroughly across modern mobile, tablet, and desktop viewports.'
+        question: 'Will my website work smoothly on all mobile devices?',
+        answer: 'Yes. Every website we build is engineered mobile-first and tested rigorously across iOS and Android viewports.'
       },
       {
-        question: 'Will the website be optimized for Google Search (SEO)?',
-        answer: 'Yes. We build clean semantic code, fast loading speeds, OpenGraph cards, structured metadata, and XML sitemaps to ensure strong search engine discoverability.'
-      },
-      {
-        question: 'Can you assist with domain connection and deployment?',
-        answer: 'Yes. Deployment assistance and domain DNS configuration on modern edge hosting platforms are included with every project package.'
+        question: 'Will the website be optimized for Google Search?',
+        answer: 'Yes. We build clean semantic code, fast loading speeds, OpenGraph cards, structured metadata, and XML sitemaps.'
       }
     ],
-    ctaText: 'Start a Website Project →'
+    ctaText: 'Start a Business Website →'
   },
   {
-    id: 'web-application',
-    slug: 'web-application',
-    route: '/services/web-application',
+    id: 'custom-websites',
+    slug: 'custom-websites',
+    route: '/services/custom-websites',
     number: '02',
-    title: 'Web Application Development',
-    shortDesc: 'Custom dashboards, portals, and web applications built with scalable, type-safe architecture.',
-    heroTitle: 'Custom Web Applications Built for Real Business Needs.',
-    heroSubtitle: 'PRIRAJ GROUP engineers scalable web applications, business dashboards, and client portals built with type-safe architecture and secure database integrations.',
-    fullDesc: 'From internal operations tools to client-facing SaaS platforms, we build robust web applications with clean JavaScript, secure role-based access, real-time data pipelines, and responsive UX.',
+    title: 'Custom Websites',
+    shortDesc: 'Bespoke digital experiences with distinct art direction, smooth interactions, and fluid responsive storytelling.',
+    heroTitle: 'Websites That Look Distinctive. Never Generic.',
+    heroSubtitle: 'PRIRAJ GROUP crafts tailored web flagships with custom aesthetics, purposeful motion, and memorable brand presence.',
+    fullDesc: 'We move beyond off-the-shelf templates to build custom digital environments tailored around distinct brand storytelling, luxury aesthetics, and interactive product presentations.',
     offerings: [
-      { title: 'Custom Dashboards', desc: 'Interactive analytics and administrative dashboards built for high data clarity.' },
-      { title: 'Admin Panels', desc: 'Secure back-office control panels for managing users, content, orders, and system logs.' },
-      { title: 'User Authentication', desc: 'Secure session handling, token-based auth, magic links, and OAuth social logins.' },
-      { title: 'Database-Driven Applications', desc: 'Structured schema design, relational and non-relational database connectivity.' },
-      { title: 'Booking Systems', desc: 'Calendar scheduling, appointment management, and automated booking confirmations.' },
-      { title: 'Management Systems', desc: 'Custom enterprise software for tracking inventory, assets, pipelines, and tasks.' },
-      { title: 'API Integrations', desc: 'Seamless communication with payment gateways, CRMs, ERPs, and cloud services.' },
-      { title: 'Custom Workflows', desc: 'Automated business logic that eliminates manual data entry and human error.' },
-      { title: 'Role-Based Access', desc: 'Granular permissions differentiating administrators, team members, and clients.' },
-      { title: 'Business Automation', desc: 'Background job processing, webhooks, and automated email/SMS dispatches.' }
+      { title: 'Bespoke Art Direction', desc: 'Unique visual identities, typographic scale, and tailored dark or light color systems.' },
+      { title: 'Creative Interactions', desc: 'Subtle scroll-triggered animations and micro-interactions that feel refined and purposeful.' },
+      { title: 'Product Storytelling', desc: 'Immersive visual chapters that showcase services, products, or portfolios in detail.' },
+      { title: 'Dynamic Layouts', desc: 'Asymmetric bento grids, editorial splits, and bespoke content rhythms.' }
     ],
     deliverables: [
-      'Custom Web Application Architecture',
-      'Client & Admin Management Dashboards',
-      'Secure User Authentication & RBAC',
-      'Database Schema & API Endpoints',
-      'Automated Workflow Logic',
-      'Staging & Production Deployment'
+      'Tailored Design System & Brand Direction',
+      'Interactive Web Experience',
+      'Fluid Motion & Micro-Interactions',
+      'Performance-Tuned Asset Pipeline',
+      'Full Ownership of Code & Assets'
     ],
     capabilities: [
-      'JavaScript & Component Modular Design',
-      'State Management & Cache Invalidation',
-      'Sub-50ms Client-Server Communication',
-      'Zero-Vulnerability Token Security'
+      'Editorial Web Typography',
+      'Zero-Template Originality',
+      'Micro-Interactions $\\le 200$ms',
+      'Fluid Viewport Scaling'
     ],
     process: [
-      { step: '01', title: 'Architecture & Modeling', desc: 'Map data entities, user roles, security rules, and technical requirements.' },
-      { step: '02', title: 'System UX & Wireframing', desc: 'Design ergonomic dashboard layouts, tables, modals, and flowcharts.' },
-      { step: '03', title: 'Full-Stack Engineering', desc: 'Implement frontend UI, server-side APIs, and database schemas.' },
-      { step: '04', title: 'Security & QA Audits', desc: 'Audit authorization boundaries, edge cases, session timeouts, and load resilience.' },
-      { step: '05', title: 'Staging & Rollout', desc: 'Deploy to secure cloud environments with ongoing monitoring and support.' }
+      { step: '01', title: 'Brand Immersion', desc: 'Deep-dive into your brand aesthetic, market peers, and creative vision.' },
+      { step: '02', title: 'Art Direction & Mood', desc: 'Establish spatial rhythm, typographic pairings, and bespoke palettes.' },
+      { step: '03', title: 'Interactive Prototype', desc: 'Review motion concepts, screen transitions, and component behavior.' },
+      { step: '04', title: 'Frontend Craft', desc: 'Code the custom interface with high attention to detail and performance.' },
+      { step: '05', title: 'Deployment', desc: 'Deploy to fast edge infrastructure with domain and SSL verification.' }
     ],
-    technologies: ['React', 'JavaScript', 'Node.js', 'Express', 'PostgreSQL / SQLite', 'WebSockets', 'Tailwind CSS'],
-    pricingStarting: 'Custom Quote',
-    pricingNote: 'Web applications are scoped to your exact business workflows and data requirements. We provide transparent milestones.',
-    relevantProjectId: 'novia',
-    relevantProjectLabel: 'Concept Project',
+    technologies: ['React', 'Framer Motion', 'Tailwind CSS', 'Vite', 'Canvas', 'WebGL'],
+    pricingStarting: 'Starting from ₹15,000–₹20,000',
+    pricingNote: 'Custom website scopes are quoted based on animation complexity and bespoke asset requirements.',
+    relevantProjectId: 'influence',
+    relevantProjectLabel: 'Selected Project',
     faqs: [
       {
-        question: 'How do you price and estimate a web application project?',
-        answer: 'Web applications are scoped based on functional modules (e.g. auth, dashboard, database, roles, external APIs). We provide a detailed architectural specification and milestone-based quotation.'
+        question: 'Do you use templates or build from scratch?',
+        answer: 'Every custom website is built from scratch. We write bespoke code tailored to your exact brand aesthetics and business requirements.'
       },
       {
-        question: 'Can our web application connect to our existing database or CRM?',
-        answer: 'Yes. We specialize in building secure REST and GraphQL API connectors to integrate with existing databases, third-party software, and internal tools.'
-      },
-      {
-        question: 'How is user data and role security managed?',
-        answer: 'We implement industry-standard token security, encrypted storage, HTTPS enforcement, and strict server-validated role permissions.'
-      },
-      {
-        question: 'Do you provide maintenance and updates after launch?',
-        answer: 'Yes. We offer ongoing maintenance agreements, feature sprint additions, and infrastructure monitoring.'
+        question: 'Can you implement custom animations without slowing down the site?',
+        answer: 'Yes. We strictly animate compositor-only properties (transform and opacity) using lightweight code to ensure sub-second performance.'
       }
     ],
-    ctaText: 'Discuss Your Web Application →'
+    ctaText: 'Start a Custom Website →'
+  },
+  {
+    id: 'ecommerce',
+    slug: 'ecommerce',
+    route: '/services/ecommerce',
+    number: '03',
+    title: 'E-commerce',
+    shortDesc: 'High-converting online stores with streamlined product catalogs, shopping carts, and secure payment integrations.',
+    heroTitle: 'Online Stores Built to Turn Browsers Into Customers.',
+    heroSubtitle: 'PRIRAJ GROUP creates fast, secure, and conversion-optimized e-commerce platforms designed to maximize sales.',
+    fullDesc: 'We develop complete online stores tailored to drive transactions, manage product inventories, process secure payments, and provide smooth checkout experiences across mobile and desktop.',
+    offerings: [
+      { title: 'Storefront Design', desc: 'Bespoke brand storefronts that stand out from generic out-of-the-box store templates.' },
+      { title: 'Product Showcases', desc: 'Compelling product pages with zoomable galleries, variant pickers, and clear CTA buttons.' },
+      { title: 'Product Catalog', desc: 'Organized category architecture, search filters, and instant sorting.' },
+      { title: 'Frictionless Cart & Checkout', desc: 'Slide-out cart drawers, order summaries, and distraction-free checkout funnels.' },
+      { title: 'Payment Gateways', desc: 'Secure integrations with Razorpay, Stripe, UPI, credit/debit cards, and digital wallets.' },
+      { title: 'Order & Customer Flow', desc: 'Automated order confirmations, customer notifications, and status updates.' }
+    ],
+    deliverables: [
+      'Complete Custom Storefront',
+      'Product Detail & Category Pages',
+      'Cart & Single-Page Checkout Funnel',
+      'Payment Gateway Integration',
+      'Inventory & Order Notification Flow',
+      'Mobile-Optimized Checkout'
+    ],
+    capabilities: [
+      'Conversion Funnel Engineering',
+      'Instant Mobile Checkout',
+      'Secure Payment API Handshake',
+      'Product Schema for Search'
+    ],
+    process: [
+      { step: '01', title: 'Catalog Planning', desc: 'Review SKU volume, categories, shipping requirements, and payment providers.' },
+      { step: '02', title: 'Storefront UI & Cart UX', desc: 'Design high-converting product pages, collection filters, and checkout flows.' },
+      { step: '03', title: 'Store Engineering', desc: 'Develop responsive frontends, inventory hooks, and shopping cart logic.' },
+      { step: '04', title: 'Payment QA & Sandboxing', desc: 'Perform live test transactions, order simulations, and security validation.' },
+      { step: '05', title: 'Go Live & Store Handoff', desc: 'Launch the store, verify domain SSL, and provide admin management guidance.' }
+    ],
+    technologies: ['React', 'Next.js', 'Razorpay', 'Stripe', 'Tailwind CSS', 'Node.js'],
+    pricingStarting: 'Starting from ₹40,000–₹70,000+',
+    pricingNote: 'E-commerce pricing depends on product volume, catalog complexity, payment providers, and custom workflows.',
+    relevantProjectId: 'barber-booking',
+    relevantProjectLabel: 'Selected Project',
+    faqs: [
+      {
+        question: 'Which payment gateways can you integrate?',
+        answer: 'We integrate Razorpay, Stripe, UPI, PayPal, Cashfree, and international card processors.'
+      },
+      {
+        question: 'Can you build custom e-commerce or Shopify stores?',
+        answer: 'We build both custom headless React/Next.js e-commerce platforms and bespoke custom-coded storefronts.'
+      }
+    ],
+    ctaText: 'Start an E-commerce Store →'
   },
   {
     id: 'ui-ux-design',
     slug: 'ui-ux-design',
     route: '/services/ui-ux-design',
-    number: '03',
-    title: 'UI/UX Design',
-    shortDesc: 'Clear, refined interfaces and behavioral user experiences focused on usability and business goals.',
+    number: '04',
+    title: 'UI / UX Design',
+    shortDesc: 'Refined interface craft and intuitive behavioral user flows designed to eliminate friction and maximize conversion rates.',
     heroTitle: 'Interfaces That Look Good. Experiences That Make Sense.',
-    heroSubtitle: 'PRIRAJ GROUP crafts intuitive, human-centered digital interfaces that eliminate user friction and turn visitors into loyal customers.',
+    heroSubtitle: 'PRIRAJ GROUP crafts human-centered digital interfaces that eliminate user friction and turn visitors into loyal customers.',
     fullDesc: 'We unite cognitive psychology, typographic hierarchy, and modern design systems to build digital products that feel effortless to navigate and visually unforgettable.',
     offerings: [
       { title: 'User Research', desc: 'Investigating audience needs, competitor friction points, and key behavioral motivations.' },
@@ -180,10 +224,7 @@ export const SERVICES_DATA: ServiceItem[] = [
       { title: 'User Flows', desc: 'Mapping step-by-step paths from first landing to successful conversion and checkout.' },
       { title: 'Wireframes', desc: 'Low-fidelity structural blueprints establishing spatial balance before visual styling.' },
       { title: 'High-Fidelity UI', desc: 'Pixel-perfect interface design with custom typography, iconography, and color palettes.' },
-      { title: 'Responsive Design', desc: 'Ergonomic layouts tailored specifically for touch screens, tablets, and desktop displays.' },
-      { title: 'Design Systems', desc: 'Scalable component libraries, design tokens, and style guides ensuring brand consistency.' },
-      { title: 'Interactive Prototypes', desc: 'Clickable prototypes that let you experience the product before writing any code.' },
-      { title: 'Developer Handoff', desc: 'Clean design token specs, asset exports, and spacing annotations for seamless engineering.' }
+      { title: 'Design Systems', desc: 'Scalable component libraries, design tokens, and style guides ensuring brand consistency.' }
     ],
     deliverables: [
       'Complete High-Fidelity UI Screens',
@@ -209,7 +250,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     technologies: ['Figma', 'Design Tokens', 'Component Systems', 'Interactive Prototyping', 'Vector Art'],
     pricingStarting: 'Custom Quote / Included in Packages',
     pricingNote: 'UI/UX design can be commissioned standalone or integrated seamlessly with complete engineering.',
-    relevantProjectId: '75-hard-challenge',
+    relevantProjectId: 'winter-arc',
     relevantProjectLabel: 'Selected Project',
     faqs: [
       {
@@ -217,244 +258,213 @@ export const SERVICES_DATA: ServiceItem[] = [
         answer: 'UX (User Experience) is the underlying structure: how the product functions, user flows, friction removal, and how easily a user reaches their goal. UI (User Interface) is the visual craft: typography, colors, button styles, visual polish, and brand aesthetics.'
       },
       {
-        question: 'Will I be able to click through an interactive prototype before development?',
-        answer: 'Yes. We deliver interactive prototypes where you can test navigation, button states, and screen transitions before engineering commences.'
-      },
-      {
         question: 'Do you provide the complete design files in Figma?',
         answer: 'Yes. All design tokens, component variants, wireframes, and vector assets are handed over with full ownership.'
-      },
-      {
-        question: 'Can you redesign our existing website or software?',
-        answer: 'Yes. We perform heuristic UX audits on existing platforms to identify conversion bottlenecks and deliver a modern redesign.'
       }
     ],
     ctaText: 'Start a UI/UX Project →'
   },
   {
-    id: 'ecommerce',
-    slug: 'ecommerce',
-    route: '/services/ecommerce',
-    number: '04',
-    title: 'E-commerce Development',
-    shortDesc: 'High-converting online stores with product catalogs, shopping carts, checkout funnels, and payments.',
-    heroTitle: 'Online Stores Built to Turn Browsers Into Customers.',
-    heroSubtitle: 'PRIRAJ GROUP creates fast, secure, and conversion-optimized e-commerce platforms designed to showcase your products and maximize sales.',
-    fullDesc: 'We develop complete online stores tailored to drive transactions, manage product inventories, process secure multi-currency payments, and provide smooth checkout experiences across mobile and desktop.',
-    offerings: [
-      { title: 'Storefront Design', desc: 'Bespoke brand storefronts that stand out from generic out-of-the-box store templates.' },
-      { title: 'Product Pages', desc: 'Compelling product showcases with zoomable galleries, variant pickers, and clear CTA buttons.' },
-      { title: 'Product Catalog', desc: 'Organized category architecture, faceted search filters, and instant sorting.' },
-      { title: 'Shopping Cart', desc: 'Frictionless slide-out cart drawers, order summaries, and coupon application.' },
-      { title: 'Checkout Funnel', desc: 'Distraction-free, multi-step checkout designed to minimize cart abandonment.' },
-      { title: 'Payment Integration', desc: 'Secure integrations with Razorpay, Stripe, UPI, credit/debit cards, and wallets.' },
-      { title: 'Order Management', desc: 'Intuitive order tracking, automated customer notifications, and status updates.' },
-      { title: 'Admin Features', desc: 'Easy-to-use backend for uploading inventory, updating pricing, and checking sales analytics.' },
-      { title: 'Responsive Experience', desc: 'Lightning-fast mobile checkout optimized for on-the-go smartphone shoppers.' },
-      { title: 'Performance and SEO', desc: 'Schema product markup for Google shopping cards and instant image loading.' }
-    ],
-    deliverables: [
-      'Complete Custom Storefront',
-      'Product Detail & Category Pages',
-      'Cart & Single-Page Checkout Funnel',
-      'Payment Gateway Integration',
-      'Customer Order & Inventory Admin',
-      'Security & Speed Optimization'
-    ],
-    capabilities: [
-      'Conversion Rate Optimization (CRO)',
-      'Secure PCI-DSS Compliant Payments',
-      'Automated Order Emails & Invoicing',
-      'Mobile-Optimized Checkout Ergonomics'
-    ],
-    process: [
-      { step: '01', title: 'Product & Catalog Planning', desc: 'Review SKU volume, categories, shipping requirements, and payment providers.' },
-      { step: '02', title: 'Storefront UI & Cart UX', desc: 'Design high-converting product pages, collection filters, and checkout flows.' },
-      { step: '03', title: 'Store Engineering', desc: 'Develop responsive frontends, inventory hooks, and shopping cart logic.' },
-      { step: '04', title: 'Gateway & Sandbox QA', desc: 'Perform live test transactions, order simulations, and security validation.' },
-      { step: '05', title: 'Go Live & Store Handoff', desc: 'Launch the store, verify domain SSL, and provide admin management guidance.' }
-    ],
-    technologies: ['React', 'JavaScript', 'Stripe / Razorpay', 'Headless E-commerce', 'Tailwind CSS', 'Secure Webhooks'],
-    pricingStarting: 'Starting from ₹40,000–₹70,000+',
-    pricingNote: 'Final pricing depends on SKU volume, custom checkout requirements, and third-party integrations.',
-    faqs: [
-      {
-        question: 'Which payment gateways can you integrate?',
-        answer: 'We integrate Stripe, Razorpay, UPI, credit/debit cards, net banking, PayPal, and regional gateways based on your business location and customer base.'
-      },
-      {
-        question: 'Is it easy for me to add new products and manage orders?',
-        answer: 'Yes. We deliver a clean, intuitive administrative interface where you can add products, upload images, manage prices, and view customer orders effortlessly.'
-      },
-      {
-        question: 'How do you ensure checkout is fast on mobile phones?',
-        answer: 'We optimize touch ergonomics, minimize required checkout fields, and implement autofill and quick payment methods (like UPI/Apple Pay) to reduce drop-offs.'
-      },
-      {
-        question: 'Will my products appear in Google Search results?',
-        answer: 'Yes. We implement schema.org Product and Offer structured data so your product names, pricing, and availability display clearly in search engine rich results.'
-      }
-    ],
-    ctaText: 'Build My Store →'
-  },
-  {
-    id: 'branding',
-    slug: 'branding',
-    route: '/services/branding',
+    id: 'web-development',
+    slug: 'web-development',
+    route: '/services/web-development',
     number: '05',
-    title: 'Branding & Digital Identity',
-    shortDesc: 'Strategic visual identities, logos, typography systems, and digital brand directions that build immediate trust.',
-    heroTitle: 'Build a Brand People Remember.',
-    heroSubtitle: 'PRIRAJ GROUP creates distinctive, premium visual systems and digital brand guidelines that command authority and stand the test of time.',
-    fullDesc: 'We define cohesive brand systems that set businesses apart in competitive markets, combining custom typography, color systems, iconography, and digital style guides that seamlessly translate to web and mobile.',
+    title: 'Web Development',
+    shortDesc: 'Clean, modular frontend and full-stack engineering with sub-second page performance, robust security, and reliable code quality.',
+    heroTitle: 'Engineered for Performance, Reliability and Scale.',
+    heroSubtitle: 'PRIRAJ GROUP writes clean, modern TypeScript and React code that loads instantly, handles traffic, and stays secure.',
+    fullDesc: 'We build fast, secure web solutions that solve operational bottlenecks, present dynamic data, and scale effortlessly without bloated third-party dependencies.',
     offerings: [
-      { title: 'Logo Design', desc: 'Minimalist, memorable primary and secondary brand marks engineered for digital screens and print.' },
-      { title: 'Visual Identity', desc: 'Comprehensive aesthetic direction defining tone, mood, texture, and visual weight.' },
-      { title: 'Color Palette', desc: 'Carefully balanced primary, secondary, and accent color codes optimized for digital contrast.' },
-      { title: 'Typography', desc: 'Selected display and body font pairings establishing character, hierarchy, and effortless readability.' },
-      { title: 'Brand Guidelines', desc: 'A clean reference manual specifying logo clearances, spacing rules, and usage constraints.' },
-      { title: 'Social Media Identity', desc: 'Profile avatars, banner templates, and post visual guidelines ensuring cross-channel harmony.' },
-      { title: 'Digital Brand Direction', desc: 'UI aesthetic rules for digital platforms, marketing websites, and application interfaces.' },
-      { title: 'Website Visual Identity', desc: 'Harmonizing digital branding specifically for high-impact web presence and conversion.' }
+      { title: 'Frontend Engineering', desc: 'Clean, accessible, and reactive user interfaces built with React, TypeScript, and modern CSS.' },
+      { title: 'API & Backend Integration', desc: 'Serverless routes, REST APIs, and third-party webhook connections.' },
+      { title: 'Performance Optimization', desc: 'Sub-second First Contentful Paint, code splitting, and optimized bundle sizes.' },
+      { title: 'Secure Form & Email Systems', desc: 'Server-side validated inquiry systems, Resend API integration, and anti-spam verification.' },
+      { title: 'Responsive Testing', desc: 'Thorough QA testing across device sizes, browser engines, and network conditions.' }
     ],
     deliverables: [
-      'Master Vector Logo Suite (SVG, PNG, EPS)',
-      'Digital Brand Guidelines PDF',
-      'Typography & Color Contrast System',
-      'Iconography & Visual Asset Library',
-      'Social Media Kit & Digital Assets',
-      'Website Visual Design Rules'
+      'Complete Production Source Code',
+      'Sub-Second First Contentful Paint',
+      'API & Third-Party Service Handshakes',
+      'Secure Contact & Lead Funnels',
+      'Vercel / Cloud Run Production Deployment'
     ],
     capabilities: [
-      'High-End Modern Art Direction',
-      'Mathematical Vector Geometry',
-      'Cross-Channel Digital Consistency',
-      'Timeless Minimalist Aesthetic'
+      'Strict TypeScript Architecture',
+      'Edge Function & API Routing',
+      'Core Web Vitals Calibration',
+      'Zero-Downtime Deployment'
     ],
     process: [
-      { step: '01', title: 'Brand Positioning', desc: 'Clarify target audience perception, market competitors, and core company values.' },
-      { step: '02', title: 'Creative Direction', desc: 'Explore visual directions, typographic tones, and mood boards.' },
-      { step: '03', title: 'Logo & Palette Craft', desc: 'Design vector marks, responsive lockups, and digital color systems.' },
-      { step: '04', title: 'System Applications', desc: 'Apply branding to website mockups, digital cards, and social profiles.' },
-      { step: '05', title: 'Brand Manual Delivery', desc: 'Package all vector assets, guidelines, and font rules into a comprehensive package.' }
+      { step: '01', title: 'Technical Architecture', desc: 'Establish project stack, API boundaries, state management, and component architecture.' },
+      { step: '02', title: 'Modular Development', desc: 'Write clean, maintainable frontend and backend code with strict type checking.' },
+      { step: '03', title: 'Integration & Testing', desc: 'Integrate forms, APIs, security rules, and performance audits.' },
+      { step: '04', title: 'Cross-Device QA', desc: 'Verify touch ergonomics, network fallbacks, and responsiveness.' },
+      { step: '05', title: 'Production Rollout', desc: 'Deploy to high-speed global edge infrastructure.' }
     ],
-    technologies: ['Vector Suite', 'Typography Engines', 'Figma', 'Digital Design Tokens'],
-    pricingStarting: 'Custom Quote / Integrated with Web',
-    pricingNote: 'Branding can be commissioned independently or combined with web design and development.',
+    technologies: ['React', 'TypeScript', 'Node.js', 'Tailwind CSS', 'Vite', 'Express', 'Resend'],
+    pricingStarting: 'Starting from ₹15,000–₹20,000',
+    pricingNote: 'Web development projects are quoted based on technical scope, APIs, and custom logic required.',
     relevantProjectId: 'influence',
     relevantProjectLabel: 'Selected Project',
     faqs: [
       {
-        question: 'What file formats will I receive for my logo and brand assets?',
-        answer: 'You receive vector source files (SVG, EPS, PDF) for infinite scalability without quality loss, plus high-resolution PNGs with transparent backgrounds for all digital uses.'
+        question: 'Do you write clean, maintainable code?',
+        answer: 'Yes. We follow strict TypeScript standards, modular component architecture, and zero-bloat principles so your codebase remains reliable and easy to maintain.'
       },
       {
-        question: 'Can branding be done alongside our new website development?',
-        answer: 'Yes. Designing your brand identity and website together creates the strongest, most unified digital experience for your customers.'
-      },
-      {
-        question: 'Do you provide guidelines for social media and marketing use?',
-        answer: 'Yes. Our brand manuals include specific rules for profile pictures, banner dimensions, color contrast, and font usage.'
+        question: 'Can you integrate our existing backend or APIs?',
+        answer: 'Yes. We connect custom REST APIs, database endpoints, payment gateways, and third-party services.'
       }
     ],
-    ctaText: 'Build My Brand →'
+    ctaText: 'Start a Web Development Project →'
   },
   {
-    id: 'custom-digital-solutions',
-    slug: 'custom-digital-solutions',
-    route: '/services/custom-digital-solutions',
+    id: 'custom-features',
+    slug: 'custom-features',
+    route: '/services/custom-features',
     number: '06',
-    title: 'Custom Digital Solutions',
-    shortDesc: 'Bespoke engineering for unique digital requirements, custom APIs, automated workflows, and internal tools.',
-    heroTitle: 'Have a Different Digital Challenge?',
-    heroSubtitle: 'PRIRAJ GROUP solves complex technical requirements that do not fit into standard off-the-shelf software packages.',
-    fullDesc: 'We partner with businesses to architect and implement specialized digital workflows, API bridges, AI integrations, data pipelines, and internal tools designed around your exact operational hurdles.',
+    title: 'Custom Features',
+    shortDesc: 'Specialized digital capabilities, interactive calculators, portals, custom APIs, third-party integrations, and automated workflows.',
+    heroTitle: 'Custom Capabilities Tailored to Your Business Operations.',
+    heroSubtitle: 'PRIRAJ GROUP engineers specialized tools, interactive client portals, and automation workflows that streamline your business.',
+    fullDesc: 'When off-the-shelf software falls short, we engineer custom digital features, dynamic calculators, booking flows, client dashboards, and custom integrations tailored to your exact operational workflows.',
     offerings: [
-      { title: 'AI Integrations', desc: 'Connecting modern language and computer vision models into your web applications and workflows.' },
-      { title: 'Automation', desc: 'Streamlining repetitive manual business processes into automated, zero-error background pipelines.' },
-      { title: 'APIs', desc: 'Designing secure, high-throughput REST and WebSocket APIs tailored for custom applications.' },
-      { title: 'Internal Business Tools', desc: 'Custom portals for managing team workflows, customer records, and operational tasks.' },
-      { title: 'Custom Software', desc: 'Tailor-engineered software solutions built from the ground up for your specific business logic.' },
-      { title: 'Third-Party Integrations', desc: 'Connecting CRMs, payment gateways, ERPs, inventory software, and analytics services.' },
-      { title: 'Digital Workflow Solutions', desc: 'Custom approval loops, automated document generation, and client onboarding funnels.' }
+      { title: 'Client Portals', desc: 'Protected dashboards for document sharing, order status, and customer communication.' },
+      { title: 'Interactive Calculators', desc: 'Dynamic price estimation, quote generators, and loan/metric calculators that boost conversions.' },
+      { title: 'Booking & Scheduling', desc: 'Custom appointment booking flows integrated with Google Calendar or internal management.' },
+      { title: 'Workflow Automations', desc: 'Connecting form submissions directly to email dispatch, WhatsApp alerts, and internal systems.' },
+      { title: 'Third-Party Integrations', desc: 'Integrating custom CRMs, payment providers, maps, and specialized web APIs.' }
     ],
     deliverables: [
-      'Technical Architecture Blueprint',
-      'Custom API & Backend Service Scaffolding',
-      'Third-Party Service Connectors',
-      'Automated Background Task Pipelines',
-      'System Documentation & API Schemas',
-      'Ongoing Technical Advisory & SLA'
+      'Custom Functional Modules',
+      'Interactive Tools & Calculators',
+      'Automated Email & Notification Workflows',
+      'API Webhook Endpoints',
+      'Full Source Code & Admin Instructions'
     ],
     capabilities: [
-      'Zero-Downtime Infrastructure Design',
-      'Secure Token & Webhook Verification',
-      'Asynchronous Event-Driven Architecture',
-      'Direct Senior Developer Collaboration'
+      'Bespoke Business Logic',
+      'Real-Time Calculations',
+      'Secure Data Handling',
+      'Custom API Handshakes'
     ],
     process: [
-      { step: '01', title: 'Technical Problem Immersion', desc: 'Deep-dive into your operational bottleneck, data flow, and exact system needs.' },
-      { step: '02', title: 'Solution Architecture', desc: 'Design an efficient, secure technical roadmap and system integration blueprint.' },
-      { step: '03', title: 'Agile Implementation', desc: 'Engineer custom software modules with clean code and rigorous type safety.' },
-      { step: '04', title: 'System QA & Load Testing', desc: 'Validate error handling, rate limiting, data integrity, and API reliability.' },
-      { step: '05', title: 'Deployment & Monitoring', desc: 'Launch into production with error telemetry and direct technical support.' }
+      { step: '01', title: 'Workflow Immersion', desc: 'Analyze the manual bottleneck or exact functional capability needed.' },
+      { step: '02', title: 'Logic Blueprint', desc: 'Map calculation rules, user inputs, and output behaviors.' },
+      { step: '03', title: 'Component Engineering', desc: 'Build the interactive interface and backend processing logic.' },
+      { step: '04', title: 'Edge Case Testing', desc: 'Stress-test inputs, error states, and rate limits.' },
+      { step: '05', title: 'Integration & Delivery', desc: 'Mount seamlessly into your live website or web application.' }
     ],
-    technologies: ['JavaScript', 'Node.js', 'PostgreSQL', 'REST / GraphQL', 'WebSockets', 'Cloud Infrastructure'],
-    pricingStarting: 'Custom Quote',
-    pricingNote: 'Priced transparently based on project complexity, integrations, and milestones. No hidden fees.',
+    technologies: ['React', 'TypeScript', 'Node.js', 'APIs', 'Webhooks', 'Tailwind CSS'],
+    pricingStarting: 'Custom Quote / Add-on to Website',
+    pricingNote: 'Custom features can be built into a new website or integrated into your existing platform.',
+    relevantProjectId: 'novia',
+    relevantProjectLabel: 'Selected Project',
     faqs: [
       {
-        question: 'How do we begin if our digital requirement is non-standard?',
-        answer: 'You can contact us with a brief summary of what your business is trying to accomplish. We will review your requirements, conduct a scoping discussion, and recommend an architectural path.'
+        question: 'Can you add custom features to an existing website?',
+        answer: 'Yes. We can engineer custom calculators, forms, portals, and integrations that mount directly onto your current website.'
       },
       {
-        question: 'Do you sign Non-Disclosure Agreements (NDAs)?',
-        answer: 'Yes. We respect intellectual property and are happy to execute an NDA before reviewing proprietary requirements.'
-      },
-      {
-        question: 'Can you integrate with our legacy software or proprietary database?',
-        answer: 'Yes. We frequently build custom API layers and database bridges that allow legacy systems to safely communicate with modern web interfaces.'
+        question: 'How do you test custom calculation logic?',
+        answer: 'We run unit tests across edge-case numbers, currency formats, and user inputs to guarantee 100% calculation accuracy.'
       }
     ],
-    ctaText: 'Discuss Your Idea →'
+    ctaText: 'Discuss Custom Features →'
   }
 ];
 
 export const PROJECTS_DATA: ProjectItem[] = [
   {
-    id: '75-hard-challenge',
-    title: '75 HARD CHALLENGE',
-    category: 'Mobile App / Fitness / Productivity',
+    id: 'winter-arc',
+    title: 'WINTER ARC — 90 DAY CHALLENGE',
+    category: 'APP / FITNESS PRODUCT',
     projectType: 'Mobile Application · Fitness / Productivity',
-    year: '2025',
-    image: '/assets/projects/75-hard-app.png',
+    year: '2026',
+    image: '/assets/projects/winter-arc-app.jpg',
     badgeType: 'REAL PROJECT',
-    headline: 'A challenge-focused mobile experience designed to help users track daily discipline, routines, progress, and challenge completion.',
-    description: 'A challenge-focused mobile experience designed to help users track daily discipline, routines, progress, and challenge completion.',
-    overview: 'The 75 Hard program requires absolute daily discipline: two 45-minute workouts (one outdoors), 1 gallon of water, clean diet with zero cheats or alcohol, 10 pages of non-fiction reading, and a daily progress photo. Missing any single task resets the streak to Day 1. This mobile app was engineered specifically to manage this strict protocol without clutter or distraction.',
-    problem: 'Users attempting the challenge frequently fail because standard habit apps lack support for dual non-consecutive workout timers, gallon hydration division, and private photo streak verification with strict reset enforcement.',
-    approach: 'Engineered a focused, zero-friction mobile dashboard featuring a single daily completion ring, one-tap task logging with timestamp verification, offline SQLite persistence, and an encrypted local photo journal.',
-    design: 'High-contrast charcoal dark mode, bold progress ring typography, warm gold milestone highlights, and thumb-accessible navigation designed for quick check-ins during training.',
+    headline: 'A personal 90-day transformation system designed around training, nutrition, productivity, recovery and daily discipline.',
+    description: 'A personal 90-day transformation system designed around training, nutrition, productivity, recovery and daily discipline.',
+    overview: 'The Winter Arc protocol demands absolute daily consistency during the critical final 90 days of the year: morning cardio, progressive resistance training, clean nutrition tracking, 1 gallon hydration, 10 pages of reading, and daily discipline accountability. Built with a sleek obsidian aesthetic, high-contrast typography, and zero-distraction UX.',
+    problem: 'Standard fitness apps are overcrowded with ad spam, complex calorie databases, and slow interfaces that break daily momentum. Users fail protocols because habit tracking feels like administrative paperwork.',
+    approach: 'Engineered a unified, tactile mobile dashboard anchored around a single Day X / 90 circular progress ring, one-tap daily mission completion, integrated interval workout timers, and progressive Day 1 to Day 90 milestone calibration.',
+    design: 'Obsidian charcoal surfaces (`#08080c`), warm metallic gold milestone accents (`#d4af37`), crisp tabular numerals, and ergonomic bottom-thumb navigation for active training sessions.',
     keyFeatures: [
-      '6-Rule Daily Verification Checklist with Instant Validation',
-      'Dual 45-Minute Workout Timers with Outdoor GPS/Interval Tracking',
-      '1-Gallon Hydration Quick-Add Progress Meter',
-      'Secure Local Progress Photo Journal Vault',
-      'Automatic Day Counter & Strict Day 1 Reset Protocol on Incomplete Rules'
+      'Day X / 90 Circular Progress Dashboard with Active Day Counter',
+      'Daily Missions Checklist (Cardio, Training, Hydration, Reading, Sleep)',
+      'Dual Workout Interval Timer with Haptic Feedback',
+      '1-Gallon (3,785 ml) Hydration Progress Ring',
+      'Daily Photo Journal Vault & Private Streak Logging',
+      'Weekly Protocol Review & Discipline Analytics'
     ],
-    technologies: ['React Native', 'JavaScript', 'Tailwind CSS', 'SQLite Local DB', 'Device Camera API'],
-    finalResult: 'Delivered an intuitive native tracker with zero ads, fast offline startup, and reliable streak logging that keeps users accountable throughout all 75 consecutive days.',
-    tags: ['Mobile App', 'Fitness', 'Productivity', 'JavaScript', 'Offline First']
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Mobile First', 'Local Storage', 'Haptics'],
+    finalResult: 'Delivered an authoritative mobile product experience that keeps athletes and disciplined individuals accountable through all 90 days without distraction.',
+    tags: ['MOBILE', 'FITNESS', 'PRODUCTIVITY', 'UI/UX']
+  },
+  {
+    id: 'barber-booking',
+    title: 'BARBER SHOP BOOKING',
+    category: 'WEB / BOOKING PLATFORM',
+    projectType: 'Web Booking Platform · Grooming Studio',
+    year: '2026',
+    image: '/assets/projects/barber-booking.jpg',
+    badgeType: 'REAL PROJECT',
+    headline: 'A modern appointment-booking website designed for a barber shop, allowing customers to discover services, choose an appointment date and time, and book their visit online.',
+    description: 'A modern appointment-booking website designed for a barber shop, allowing customers to discover services, choose an appointment date and time, and book their visit online.',
+    overview: 'Barber Shop Booking solves the operational bottleneck of traditional barbershops. By replacing disruptive phone calls and unpredictable walk-in queues with an intuitive real-time appointment system, it provides barbers with an organized daily schedule and customers with an effortless booking experience.',
+    problem: 'Barber shops need a simple way for customers to schedule appointments without unnecessary phone calls or messaging that interrupt haircuts and create double-booking errors.',
+    approach: 'Engineered a frictionless 5-step client booking journey: service discovery with transparent pricing, dynamic calendar date selection, real-time available time slots, customer contact details, and instant confirmation.',
+    design: 'Warm charcoal slate surfaces, champagne gold accents, high-contrast typography, and finger-friendly booking chips optimized for instant mobile booking.',
+    keyFeatures: [
+      'Barber Shop Services & Pricing Catalog',
+      'Interactive Service Selection with Add-On Options',
+      'Dynamic Date Selection Calendar',
+      'Real-Time Available Time Slot Availability',
+      'Customer Information & Special Request Capture',
+      'Instant Booking Confirmation & SMS/Email Notification Flow',
+      'Responsive Mobile-First Booking Interface'
+    ],
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Calendar Engine', 'Mobile First', 'Node.js'],
+    finalResult: 'Eliminated manual phone coordination for the barbershop and reduced scheduling friction to under 60 seconds on mobile devices.',
+    tags: ['BOOKING', 'WEB', 'UI/UX', 'DEVELOPMENT']
+  },
+  {
+    id: 'driving-school',
+    title: 'DRIVING SCHOOL BOOKING',
+    category: 'WEB / BOOKING PLATFORM',
+    projectType: 'Web Booking Platform · Driving Academy',
+    year: '2026',
+    image: '/assets/projects/driving-school.jpg',
+    badgeType: 'REAL PROJECT',
+    headline: 'A modern driving-school website that allows students to learn about driving programs, choose their preferred training schedule, book available lessons and request pickup from their location.',
+    description: 'A modern driving-school website that allows students to learn about driving programs, choose their preferred training schedule, book available lessons and request pickup from their location.',
+    overview: 'Driving School Booking modernizes driver education logistics. Designed for a professional driving academy, it enables learners to browse curriculum programs, select lesson packages, schedule open instructor time slots, and specify their exact doorstep pickup location.',
+    problem: 'Driving schools often depend on calls or messaging to arrange lessons, making scheduling inconvenient for students and causing confusion regarding lesson pickup locations.',
+    approach: 'Architected a structured 6-step dispatch workflow: course overview and selection, interactive scheduling calendar, verified instructor time slot booking, student pickup address input with landmark recognition, and direct booking confirmation.',
+    design: 'Deep navy and technical slate backdrop, ice-blue status accents, high-readability typography, and structured forms engineered for effortless input on smartphones.',
+    keyFeatures: [
+      'Driving Course Information & Training Packages',
+      'Driving Lesson Selection (Beginner, Road Test, Defensive, Highway)',
+      'Interactive Date Selection & Weekly Instructor Calendar',
+      'Live Available Time Slots with Anti-Clash Logic',
+      'Doorstep Pickup Location & Landmark Address Input',
+      'Student Information & Learner License Verification',
+      'Instant Lesson Booking Confirmation & Dispatch Summary',
+      'Responsive Mobile Experience for On-The-Go Students'
+    ],
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Geolocation Input', 'Calendar Grid', 'Responsive UI'],
+    finalResult: 'Streamlined driving lesson scheduling, eliminating phone tag between students and on-road driving instructors.',
+    tags: ['BOOKING', 'WEB', 'EDUCATION', 'UI/UX', 'DEVELOPMENT']
   },
   {
     id: 'novia',
     title: 'NOVIA',
-    category: 'Social / Mobile App / Digital Product',
+    category: 'PRODUCT / SOCIAL PRODUCT',
     projectType: 'Mobile & Web Platform · Social / Digital Product',
     year: '2025',
     image: '/assets/projects/novia-app.png',
     badgeType: 'CONCEPT PROJECT',
-    headline: 'A modern social product concept focused on profiles, content, interaction, and a refined user experience.',
+    headline: 'A calm, sovereign social product concept focused on private circles, chronological feeds, and lossless audio interaction.',
     description: 'A modern social product concept focused on profiles, content, interaction, and a refined user experience.',
     overview: 'NOVIA rethinks social software from first principles. By replacing algorithmic engagement loops and invasive ad tracking with private sovereign circles, chronological timelines, and high-fidelity audio chambers, NOVIA provides a calm, dignified digital salon for serious creators and close circles.',
     problem: 'Mainstream social networks are optimized for outrage and surveillance advertising, generating high cognitive fatigue and diluting meaningful relationships behind algorithmic feeds.',
@@ -467,19 +477,19 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'End-to-End Encrypted Direct & Group Messaging',
       'Curated Portfolio & Long-Form Editorial Publishing Engine'
     ],
-    technologies: ['React', 'JavaScript', 'WebSockets', 'Tailwind CSS', 'WebRTC Audio', 'Encrypted Storage'],
-    finalResult: 'Engineered a functional prototype and responsive web experience demonstrating high-trust social interactions with sub-50ms message latency and complete privacy autonomy.',
-    tags: ['Social Platform', 'Mobile App', 'Digital Product', 'WebSockets', 'UI/UX Design']
+    technologies: ['React', 'TypeScript', 'WebSockets', 'Tailwind CSS', 'WebRTC Audio', 'Encrypted Storage'],
+    finalResult: 'Engineered a functional prototype demonstrating high-trust social interactions with sub-50ms message latency and complete privacy autonomy.',
+    tags: ['PRODUCT', 'SOCIAL', 'UI/UX']
   },
   {
     id: 'influence',
-    title: 'INFLUENCE WEBSITE',
-    category: 'Website / UI/UX / Web Development',
+    title: 'INFLUENCE',
+    category: 'WEB / DIGITAL EXPERIENCE',
     projectType: 'Website · UI/UX / Web Development',
     year: '2026',
     image: '/assets/projects/influence-website.png',
     badgeType: 'REAL PROJECT',
-    headline: 'A modern website experience designed with a strong visual identity, responsive layout, and conversion-focused user experience.',
+    headline: 'An architectural editorial publication designed for commanding authority, fluid typographic scales, and sub-second load speeds.',
     description: 'A modern website experience designed with a strong visual identity, responsive layout, and conversion-focused user experience.',
     overview: 'INFLUENCE is an architectural web publication designed to establish commanding authority for creators, executives, and modern studios. Built with fluid editorial grids, dynamic typography scales, and seamless page transitions, it transforms personal content into a luxury digital brand.',
     problem: 'Traditional portfolio templates and blog platforms lack editorial sophistication, producing generic layouts that fail to convey prestige, creative nuance, or distinctive identity.',
@@ -492,9 +502,9 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'Custom Audio & Keynote Stream Integration',
       'Optimized Core Web Vitals & Seamless View Transitions'
     ],
-    technologies: ['Next.js / React', 'JavaScript', 'Tailwind CSS', 'Framer Motion', 'Headless CMS Architecture'],
+    technologies: ['Next.js / React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Headless Architecture'],
     finalResult: 'Constructed an authoritative, responsive digital experience that delivers exceptional typographic poise, instantaneous page response, and effortless content management.',
-    tags: ['Website', 'Web Development', 'UI/UX', 'Digital Experience', 'Next.js']
+    tags: ['WEB', 'EDITORIAL', 'UI/UX']
   }
 ];
 
@@ -523,7 +533,7 @@ export const PRICING_PACKAGES: PricingPackage[] = [
       'Individuals & portfolios',
       'Simple corporate sites'
     ],
-    ctaText: 'START YOUR PROJECT →',
+    ctaText: 'START A PROJECT →',
     isPopular: false
   },
   {
@@ -551,8 +561,8 @@ export const PRICING_PACKAGES: PricingPackage[] = [
       'Professional services',
       'Commercial brands'
     ],
-    ctaText: 'START YOUR PROJECT →',
-    isPopular: false
+    ctaText: 'START A PROJECT →',
+    isPopular: true
   },
   {
     id: 'premium',
@@ -580,8 +590,8 @@ export const PRICING_PACKAGES: PricingPackage[] = [
       'High-growth startups',
       'Custom functionality needs'
     ],
-    ctaText: 'START YOUR PROJECT →',
-    isPopular: true
+    ctaText: 'START A PROJECT →',
+    isPopular: false
   },
   {
     id: 'ecommerce',
@@ -609,7 +619,7 @@ export const PRICING_PACKAGES: PricingPackage[] = [
       'Direct-to-consumer stores',
       'Digital merchandise'
     ],
-    ctaText: 'START YOUR PROJECT →',
+    ctaText: 'START A PROJECT →',
     isPopular: false
   }
 ];
@@ -619,36 +629,67 @@ export const PROCESS_DATA: ProcessStep[] = [
     step: '01',
     number: '01 — DISCOVER',
     title: 'DISCOVER',
-    desc: 'Understand the business, audience, requirements and goals.',
+    desc: 'Understand the business, audience and goals.',
     keyOutputs: ['Business Objective Alignment', 'Audience & Competitor Discovery', 'Clear Scope & Technical Roadmap']
   },
   {
     step: '02',
     number: '02 — PLAN',
     title: 'PLAN',
-    desc: 'Define structure, functionality, technology and project scope.',
+    desc: 'Define structure, functionality and user experience.',
     keyOutputs: ['Information Architecture', 'User Journey Mapping', 'Technology Stack & Milestone Plan']
   },
   {
     step: '03',
     number: '03 — DESIGN',
     title: 'DESIGN',
-    desc: 'Create the UI/UX and visual direction.',
+    desc: 'Create the visual direction and interface.',
     keyOutputs: ['Custom Wireframes', 'High-Fidelity Responsive Mockups', 'Interactive Prototypes & Review']
   },
   {
     step: '04',
-    number: '04 — DEVELOP',
-    title: 'DEVELOP',
-    desc: 'Build, test, optimize and integrate the product.',
+    number: '04 — BUILD',
+    title: 'BUILD',
+    desc: 'Develop, test and optimize.',
     keyOutputs: ['Clean JavaScript / React Codebase', 'Fast-Loading Responsive Ergonomics', 'Third-Party & Form Integrations']
   },
   {
     step: '05',
     number: '05 — LAUNCH',
     title: 'LAUNCH',
-    desc: 'Deploy the product and provide post-launch support.',
+    desc: 'Deploy and deliver.',
     keyOutputs: ['Cross-Device QA & Speed Audits', 'Zero-Downtime Production Deployment', 'Post-Launch Tuning & Direct Support']
+  }
+];
+
+export const FAQ_DATA = [
+  {
+    question: 'How much does a website cost?',
+    answer: 'Our website projects start from ₹8,000–₹10,000 for a Starter website, ₹15,000–₹20,000 for Business websites, and ₹20,000–₹35,000+ for Premium custom web experiences. E-commerce platforms start from ₹40,000–₹70,000+. Every project is different, and final pricing depends on scope, functionality, page count, and custom integrations.'
+  },
+  {
+    question: 'How long does a website take?',
+    answer: 'A Starter website (3–5 pages) typically takes 1–2 weeks. A Business website (5–10 pages) with custom animations and integrations takes 2–3 weeks. Custom web platforms and full e-commerce stores typically take 3–5 weeks depending on requirements.'
+  },
+  {
+    question: 'Do you build e-commerce websites?',
+    answer: 'Yes. We engineer complete e-commerce stores with product catalogs, shopping carts, single-page checkouts, inventory tracking, and secure payment gateway integrations (Razorpay, Stripe, UPI, credit/debit cards).'
+  },
+  {
+    question: 'Can you redesign an existing website?',
+    answer: 'Yes. We frequently redesign outdated or low-converting websites, auditing UX bottlenecks, modernizing the visual identity, and rebuilding the code to achieve sub-second page performance and higher client conversion.'
+  },
+  {
+    question: 'Do you provide custom functionality?',
+    answer: 'Yes. We engineer custom client portals, dynamic price calculators, appointment booking workflows, custom APIs, third-party webhook integrations, and automated business notifications.'
+  },
+  {
+    question: 'How does the project payment work?',
+    answer: 'Project payments are divided into transparent milestone-based stages: an initial deposit upon project kickoff, an interim milestone upon design/prototype approval, and the final balance upon final testing and production deployment.'
+  },
+  {
+    question: 'Do you provide post-launch support?',
+    answer: 'Yes. Every project includes post-launch testing, deployment assistance, domain DNS connection, and a direct post-launch support period to ensure your website continues running smoothly.'
   }
 ];
 
@@ -672,10 +713,10 @@ export const VALUE_PROPOSITIONS = [
 ];
 
 export const CORE_CAPABILITIES = [
-  'Website Development',
-  'Web Applications',
-  'UI/UX Design',
-  'E-commerce Development',
-  'Branding & Digital Identity',
-  'Custom Digital Solutions'
+  'Business Websites',
+  'Custom Websites',
+  'E-commerce',
+  'UI / UX Design',
+  'Web Development',
+  'Custom Features'
 ];

@@ -7,7 +7,9 @@ import { Services } from './components/Services';
 import { Pricing } from './components/Pricing';
 import { Work } from './components/Work';
 import { About } from './components/About';
+import { Founder } from './components/Founder';
 import { Process } from './components/Process';
+import { FAQ } from './components/FAQ';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ProjectModal } from './components/ProjectModal';
@@ -16,6 +18,10 @@ import { BUDGET_OPTIONS, SERVICES_DATA } from './data/content';
 import { RouterProvider, useRouter } from './router/Router';
 import { ServicesOverview } from './pages/ServicesOverview';
 import { ServiceDetail } from './pages/ServiceDetail';
+import { AboutPage } from './pages/AboutPage';
+import { WinterArcCaseStudy } from './pages/WinterArcCaseStudy';
+import { BarberBookingCaseStudy } from './pages/BarberBookingCaseStudy';
+import { DrivingSchoolCaseStudy } from './pages/DrivingSchoolCaseStudy';
 
 function AppShell() {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
@@ -63,6 +69,22 @@ function AppShell() {
       return <ServicesOverview onOpenProjectModal={(s) => handleOpenProjectModal(s)} />;
     }
 
+    if (currentPath === '/about') {
+      return <AboutPage onOpenProjectModal={() => handleOpenProjectModal()} />;
+    }
+
+    if (currentPath === '/work/winter-arc') {
+      return <WinterArcCaseStudy onOpenProjectModal={(s) => handleOpenProjectModal(s)} />;
+    }
+
+    if (currentPath === '/work/barber-booking') {
+      return <BarberBookingCaseStudy onOpenProjectModal={(s) => handleOpenProjectModal(s)} />;
+    }
+
+    if (currentPath === '/work/driving-school') {
+      return <DrivingSchoolCaseStudy onOpenProjectModal={(s) => handleOpenProjectModal(s)} />;
+    }
+
     if (currentPath.startsWith('/services/')) {
       const slug = currentPath.replace('/services/', '').replace(/\/$/, '');
       const service = SERVICES_DATA.find((s) => s.slug === slug || s.route === currentPath);
@@ -75,13 +97,15 @@ function AppShell() {
       <>
         <Hero onOpenProjectModal={() => handleOpenProjectModal()} />
         <Services onSelectService={(s) => handleOpenProjectModal(s)} />
+        <Work onOpenProjectModal={(s) => handleOpenProjectModal(s)} />
+        <About />
+        <Founder />
+        <Process />
         <Pricing
           onSelectPackage={handleSelectPackage}
           onOpenGeneralProjectModal={() => handleOpenProjectModal()}
         />
-        <Work onOpenProjectModal={(s) => handleOpenProjectModal(s)} />
-        <About />
-        <Process />
+        <FAQ />
         <Contact preselectedService={selectedService} />
       </>
     );

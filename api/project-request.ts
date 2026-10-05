@@ -273,6 +273,10 @@ export default async function handler(req: any, res: any) {
       budget,
       timeline,
       description,
+      referenceWebsite,
+      reference_website,
+      additionalRequirements,
+      additional_requirements,
       _hp_company_url, // Honeypot field for bot detection
       captcha_token    // Optional Turnstile / reCAPTCHA token
     } = body;
@@ -311,6 +315,8 @@ export default async function handler(req: any, res: any) {
     const sanitizedPhone = sanitizeString(phone, 30);
     const sanitizedCompany = sanitizeString(company, 100);
     const sanitizedTimeline = sanitizeString(timeline, 100);
+    const sanitizedRefWebsite = sanitizeString(referenceWebsite || reference_website, 300);
+    const sanitizedAdditionalReqs = sanitizeString(additionalRequirements || additional_requirements, 2000);
 
     if (!sanitizedName || sanitizedName.length < 2) {
       return res.status(400).json({
@@ -424,6 +430,12 @@ ${sanitizedTimeline || 'Not specified'}
 Project Description:
 ${sanitizedDescription}
 
+Reference Website:
+${sanitizedRefWebsite || 'Not provided'}
+
+Additional Requirements:
+${sanitizedAdditionalReqs || 'None specified'}
+
 Submission Date & Time:
 ${submissionDate} (IST)
 
@@ -500,10 +512,20 @@ Dispatched directly to ${recipientEmail}`;
           <td class="info-label">Timeline</td>
           <td class="info-value">${escapeHtml(sanitizedTimeline || 'Not specified')}</td>
         </tr>
+        ${sanitizedRefWebsite ? `
+        <tr>
+          <td class="info-label">Reference URL</td>
+          <td class="info-value"><a href="${escapeHtml(sanitizedRefWebsite)}" target="_blank">${escapeHtml(sanitizedRefWebsite)}</a></td>
+        </tr>` : ''}
       </table>
 
       <div class="section-heading">Project Description</div>
       <div class="description-card">${escapeHtml(sanitizedDescription)}</div>
+
+      ${sanitizedAdditionalReqs ? `
+      <div class="section-heading">Additional Requirements</div>
+      <div class="description-card" style="margin-top: 8px;">${escapeHtml(sanitizedAdditionalReqs)}</div>
+      ` : ''}
 
       <div style="text-align: center; margin-top: 24px;">
         <a href="mailto:${escapeHtml(sanitizedEmail)}?subject=Re:%20PRIRAJ%20GROUP%20Project%20Inquiry%20&mdash;%20${encodeURIComponent(sanitizedService)}" class="reply-cta">
