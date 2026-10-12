@@ -1,4 +1,4 @@
-import { ServiceItem, ProjectItem, ProcessStep, PricingPackage } from '../types';
+import { ServiceItem, ProjectItem, ProcessStep, PricingPackage, TeamMember } from '../types';
 
 export const OFFICIAL_CONTACT = {
   email: 'prirajgroup@gmail.com',
@@ -19,6 +19,33 @@ export const FOUNDER_INFO = {
   bio: 'Building modern digital experiences with design, technology and real-world usability.',
   mission: 'Angatdeep Singh is the founder of PRIRAJ GROUP, focused on building modern digital experiences that combine strong design, practical technology and real-world usability. We do not build disposable websites or bloated templates. Every digital flagship we engineer is tailored around distinct aesthetic identity, measurable conversion, and lasting technical performance.'
 };
+
+export const TEAM_MEMBERS: TeamMember[] = [
+  {
+    id: 'angatdeep-singh',
+    name: 'ANGATDEEP SINGH',
+    title: 'FOUNDER & CEO',
+    role: 'Founder & CEO',
+    label: 'FOUNDER & CEO',
+    relationship: 'Founder & CEO',
+    photo: '/assets/founder-angatdeep-singh.jpg',
+    initials: 'AS',
+    description: 'Angatdeep Singh is the founder of PRIRAJ GROUP, focused on building modern digital experiences that combine strong design, practical technology and real-world usability.',
+    isFounder: true
+  },
+  {
+    id: 'chintan-patel',
+    name: 'Chintan Patel',
+    title: 'FULL-STACK DEVELOPER',
+    role: 'Full-Stack Developer',
+    label: 'TEAM MEMBER',
+    relationship: 'Team Member',
+    photo: null,
+    initials: 'CP',
+    description: 'Chintan Patel is a Full-Stack Developer and team member at PRIRAJ GROUP, contributing to the development of modern web experiences and digital solutions.',
+    isFounder: false
+  }
+];
 
 export const SERVICE_OPTIONS = [
   'Business Websites',
@@ -685,7 +712,15 @@ export const FAQ_DATA = [
   },
   {
     question: 'How does the project payment work?',
-    answer: 'Project payments are divided into transparent milestone-based stages: an initial deposit upon project kickoff, an interim milestone upon design/prototype approval, and the final balance upon final testing and production deployment.'
+    answer: 'We operate on a straightforward two-stage model: 50% advance before development begins, followed by development and live staging preview inspection. Once you inspect and approve the website, the remaining 50% balance is paid prior to source-code delivery and deployment assistance.'
+  },
+  {
+    question: 'What is your refund policy if I am not satisfied with the preview?',
+    answer: 'The founder\'s intended business policy allows you to request a refund of your 50% advance payment if you review the demonstration preview and decide not to proceed because you are not satisfied with the result against the agreed written scope. You can read our complete, transparent Payment & Refund Policy on our website.'
+  },
+  {
+    question: 'Do I get the complete website source code?',
+    answer: 'Yes. Upon clearance of the full project payment, PRIRAJ GROUP delivers the complete production source code, assets, documentation, and handover instructions. You can choose to deploy independently or have PRIRAJ GROUP assist with hosting, SSL, and domain DNS setup.'
   },
   {
     question: 'Do you provide post-launch support?',

@@ -86,3 +86,16 @@ export interface PricingPackage {
   ctaText: string;
   isPopular?: boolean;
 }
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  title: string;
+  role: string;
+  label: string;
+  relationship: string;
+  photo: string | null;
+  initials: string;
+  description: string;
+  isFounder?: boolean;
+}

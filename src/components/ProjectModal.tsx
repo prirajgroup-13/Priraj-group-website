@@ -474,9 +474,21 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 />
               </div>
 
-              <div className="flex items-center gap-2 text-[11px] text-neutral-400 pt-1">
-                <Shield className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
-                <span>Protected by mutual confidentiality and direct engineering review.</span>
+              <div className="space-y-1.5 pt-1">
+                <div className="flex items-center gap-2 text-[11px] text-neutral-400">
+                  <Shield className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
+                  <span>Protected by mutual confidentiality and direct engineering review.</span>
+                </div>
+                <div className="text-[10px] text-neutral-500">
+                  Subject to our{' '}
+                  <a href="/privacy-policy" className="text-neutral-400 hover:text-[#d4af37] underline">
+                    Privacy Policy
+                  </a>{' '}
+                  &middot;{' '}
+                  <a href="/payment-refund-policy" className="text-[#d4af37] hover:underline">
+                    50% Refundable Advance Terms
+                  </a>
+                </div>
               </div>
 
               <div className="pt-2 flex flex-col gap-3">

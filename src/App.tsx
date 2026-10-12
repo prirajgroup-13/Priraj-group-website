@@ -8,6 +8,7 @@ import { Pricing } from './components/Pricing';
 import { Work } from './components/Work';
 import { About } from './components/About';
 import { Founder } from './components/Founder';
+import { Team } from './components/Team';
 import { Process } from './components/Process';
 import { FAQ } from './components/FAQ';
 import { Contact } from './components/Contact';
@@ -22,6 +23,10 @@ import { AboutPage } from './pages/AboutPage';
 import { WinterArcCaseStudy } from './pages/WinterArcCaseStudy';
 import { BarberBookingCaseStudy } from './pages/BarberBookingCaseStudy';
 import { DrivingSchoolCaseStudy } from './pages/DrivingSchoolCaseStudy';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { PaymentRefundPolicyPage } from './pages/PaymentRefundPolicyPage';
+import { TermsOfServicePage } from './pages/TermsOfServicePage';
+import { CookiePolicyPage } from './pages/CookiePolicyPage';
 
 function AppShell() {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
@@ -65,6 +70,24 @@ function AppShell() {
 
   // Determine current view
   const renderCurrentView = () => {
+    // Policy & Trust Routes
+    if (currentPath === '/privacy-policy') {
+      return <PrivacyPolicyPage />;
+    }
+
+    if (currentPath === '/payment-refund-policy' || currentPath === '/refund-policy') {
+      return <PaymentRefundPolicyPage />;
+    }
+
+    if (currentPath === '/terms-of-service' || currentPath === '/terms') {
+      return <TermsOfServicePage />;
+    }
+
+    if (currentPath === '/cookie-policy' || currentPath === '/cookies') {
+      return <CookiePolicyPage />;
+    }
+
+    // Core Pages & Case Studies
     if (currentPath === '/services') {
       return <ServicesOverview onOpenProjectModal={(s) => handleOpenProjectModal(s)} />;
     }
@@ -100,6 +123,7 @@ function AppShell() {
         <Work onOpenProjectModal={(s) => handleOpenProjectModal(s)} />
         <About />
         <Founder />
+        <Team />
         <Process />
         <Pricing
           onSelectPackage={handleSelectPackage}
@@ -122,11 +146,9 @@ function AppShell() {
       {/* Accessible DOM Content Layer */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header onOpenProjectModal={() => handleOpenProjectModal()} />
-
         <main className="flex-1">
           {renderCurrentView()}
         </main>
-
         <Footer />
       </div>
 

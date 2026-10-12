@@ -176,6 +176,23 @@ export const Process: React.FC = () => {
             </div>
           </div>
         </div>
+        {/* Process Milestone & Handover Callout */}
+        <div className="mt-12 rounded-2xl bg-[#090d16]/90 border border-white/10 p-6 sm:p-8 backdrop-blur-xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-neutral-300">
+            <div className="space-y-1.5">
+              <div className="font-mono text-[#d4af37] uppercase text-[11px] font-semibold">1. Scope & 50% Advance</div>
+              <p className="leading-relaxed">Written quotation alignment and 50% milestone before development begins.</p>
+            </div>
+            <div className="space-y-1.5">
+              <div className="font-mono text-[#38bdf8] uppercase text-[11px] font-semibold">2. Live Demonstration Preview</div>
+              <p className="leading-relaxed">Inspect interactive staging on mobile and desktop. 50% advance refundable if dissatisfied against agreed scope.</p>
+            </div>
+            <div className="space-y-1.5">
+              <div className="font-mono text-white uppercase text-[11px] font-semibold">3. Approval & Code Handover</div>
+              <p className="leading-relaxed">Final 50% balance upon approval, followed by complete source-code delivery and deployment assistance.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

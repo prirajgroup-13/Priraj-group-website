@@ -1,36 +1,41 @@
-import React, { useState } from 'react';
-import { ArrowUpRight, Mail, Phone, Instagram, MessageSquare, X } from 'lucide-react';
+import React from 'react';
+import { Mail, Phone, ArrowUpRight, MessageSquare, Instagram, ShieldCheck, RefreshCw, FileText, Lock } from 'lucide-react';
 import { SERVICES_DATA, OFFICIAL_CONTACT } from '../data/content';
 import { useRouter } from '../router/Router';
 
 export const Footer: React.FC = () => {
-  const [legalModal, setLegalModal] = useState<string | null>(null);
   const { navigate } = useRouter();
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
     { name: 'Work', href: '/#work' },
     { name: 'Packages', href: '/#packages' },
-    { name: 'About', href: '/#about' },
+    { name: 'About', href: '/about' },
     { name: 'Process', href: '/#process' },
     { name: 'Contact', href: '/#contact' }
   ];
 
-  const handleNavClick = (e: React.MouseEvent, href: string) => {
+  const policyLinks = [
+    { name: 'Privacy Policy', href: '/privacy-policy' },
+    { name: 'Payment & Refund Policy', href: '/payment-refund-policy' },
+    { name: 'Terms of Service', href: '/terms-of-service' },
+    { name: 'Cookie Policy', href: '/cookie-policy' }
+  ];
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     navigate(href);
   };
 
   return (
-    <footer className="relative bg-[#070709] border-t border-white/10 pt-16 pb-12 px-4 sm:px-6 lg:px-8 z-10 text-neutral-400">
+    <footer className="relative bg-[#050507] border-t border-white/10 pt-20 pb-12 px-4 sm:px-6 lg:px-8 z-10 text-neutral-400">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-16 border-b border-white/10">
-          
           {/* Brand Column */}
           <div className="lg:col-span-4 space-y-4">
             <a
@@ -50,7 +55,15 @@ export const Footer: React.FC = () => {
             <p className="text-xs text-neutral-400 max-w-sm leading-relaxed">
               We design and engineer websites, applications, and digital products for businesses and ambitious brands.
             </p>
-            <div className="text-xs text-neutral-500 font-mono tracking-wider pt-2">
+
+            {/* Founder Reference */}
+            <div className="pt-2 text-xs text-neutral-400 flex items-center gap-2">
+              <span className="text-neutral-500 font-mono">Founded by:</span>
+              <strong className="text-neutral-200">Angatdeep Singh</strong>
+              <span className="text-neutral-500 font-mono">&middot; Founder &amp; CEO</span>
+            </div>
+
+            <div className="text-xs text-neutral-500 font-mono tracking-wider pt-1">
               Engineering &middot; Architecture &middot; Design
             </div>
           </div>
@@ -78,10 +91,10 @@ export const Footer: React.FC = () => {
           {/* Core Services Links */}
           <div className="lg:col-span-3 space-y-4">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-white">
-              Services
+              Services &amp; Policies
             </h4>
             <ul className="space-y-2.5 text-sm">
-              {SERVICES_DATA.map((service) => (
+              {SERVICES_DATA.slice(0, 4).map((service) => (
                 <li key={service.id}>
                   <a
                     href={service.route}
@@ -93,6 +106,43 @@ export const Footer: React.FC = () => {
                 </li>
               ))}
             </ul>
+            <div className="pt-2 border-t border-white/5">
+              <div className="text-[11px] font-mono text-[#d4af37] uppercase tracking-wider mb-2">
+                Client Policies
+              </div>
+              <ul className="space-y-1.5 text-xs">
+                <li>
+                  <a
+                    href="/payment-refund-policy"
+                    onClick={(e) => handleNavClick(e, '/payment-refund-policy')}
+                    className="text-neutral-300 hover:text-white transition-colors flex items-center gap-1.5"
+                  >
+                    <RefreshCw className="w-3 h-3 text-[#d4af37]" />
+                    <span>Payment &amp; Refund Policy</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/terms-of-service"
+                    onClick={(e) => handleNavClick(e, '/terms-of-service')}
+                    className="text-neutral-300 hover:text-white transition-colors flex items-center gap-1.5"
+                  >
+                    <FileText className="w-3 h-3 text-[#d4af37]" />
+                    <span>Terms of Service</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/privacy-policy"
+                    onClick={(e) => handleNavClick(e, '/privacy-policy')}
+                    className="text-neutral-300 hover:text-white transition-colors flex items-center gap-1.5"
+                  >
+                    <Lock className="w-3 h-3 text-[#d4af37]" />
+                    <span>Privacy Policy</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* Contact & Social */}
@@ -158,33 +208,25 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+        {/* Bottom Bar with Distinct Policy Links */}
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
           <div>
-            &copy; {new Date().getFullYear()} PRIRAJ GROUP. All rights reserved.
+            &copy; {new Date().getFullYear()} PRIRAJ GROUP &middot; Founder &amp; CEO: Angatdeep Singh &middot; All rights reserved.
           </div>
 
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setLegalModal('Privacy Policy')}
-              className="hover:text-white transition-colors cursor-pointer"
-            >
-              Privacy Policy
-            </button>
-            <span>&middot;</span>
-            <button
-              onClick={() => setLegalModal('Terms')}
-              className="hover:text-white transition-colors cursor-pointer"
-            >
-              Terms
-            </button>
-            <span>&middot;</span>
-            <button
-              onClick={() => setLegalModal('Cookie Policy')}
-              className="hover:text-white transition-colors cursor-pointer"
-            >
-              Cookie Policy
-            </button>
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            {policyLinks.map((p, idx) => (
+              <React.Fragment key={p.href}>
+                <a
+                  href={p.href}
+                  onClick={(e) => handleNavClick(e, p.href)}
+                  className="hover:text-white transition-colors"
+                >
+                  {p.name}
+                </a>
+                {idx < policyLinks.length - 1 && <span>&middot;</span>}
+              </React.Fragment>
+            ))}
           </div>
 
           <button
@@ -195,35 +237,6 @@ export const Footer: React.FC = () => {
           </button>
         </div>
       </div>
-
-      {legalModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-          <div className="bg-[#0f0f15] border border-white/15 p-6 rounded-2xl max-w-md w-full shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
-              <h4 className="text-base font-bold text-white font-display">
-                {legalModal}
-              </h4>
-              <button
-                onClick={() => setLegalModal(null)}
-                className="text-neutral-400 hover:text-white"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            <p className="text-xs text-neutral-300 leading-relaxed">
-              PRIRAJ GROUP is committed to respecting your privacy, protecting project intellectual property, and adhering to strict mutual confidentiality agreements. For legal inquiries or customized contracts, contact us at {OFFICIAL_CONTACT.email}.
-            </p>
-            <div className="mt-5 text-right">
-              <button
-                onClick={() => setLegalModal(null)}
-                className="px-4 py-2 rounded-lg bg-[#d4af37] text-black text-xs font-semibold"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </footer>
   );
 };

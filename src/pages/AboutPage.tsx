@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { FOUNDER_INFO, VALUE_PROPOSITIONS, OFFICIAL_CONTACT } from '../data/content';
 import { useRouter } from '../router/Router';
+import { Team } from '../components/Team';
 
 interface AboutPageProps {
   onOpenProjectModal: () => void;
@@ -177,7 +178,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenProjectModal }) => {
           </div>
         </div>
 
-        {/* Section 3: Studio Core Values */}
+        {/* Section 3: Our Studio Team */}
+        <div className="mb-24">
+          <Team id="about-team" className="!px-0 !py-0 !bg-transparent" />
+        </div>
+
+        {/* Section 4: Studio Core Values */}
         <div className="mb-24">
           <div className="max-w-2xl mb-12">
             <div className="text-xs font-mono uppercase tracking-widest text-[#d4af37] mb-2 font-semibold">

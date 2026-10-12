@@ -1,7 +1,8 @@
 import React from 'react';
-import { ArrowUpRight, Check, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Check, Sparkles, ShieldCheck, RefreshCw, FileText } from 'lucide-react';
 import { PRICING_PACKAGES } from '../data/content';
 import { PricingPackage } from '../types';
+import { useRouter } from '../router/Router';
 
 interface PricingProps {
   onSelectPackage: (pkg: PricingPackage) => void;
@@ -12,6 +13,8 @@ export const Pricing: React.FC<PricingProps> = ({
   onSelectPackage,
   onOpenGeneralProjectModal
 }) => {
+  const { navigate } = useRouter();
+
   return (
     <section id="packages" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 z-10">
       <div className="max-w-7xl mx-auto">
@@ -119,8 +122,42 @@ export const Pricing: React.FC<PricingProps> = ({
           Final pricing depends on project scope, features, integrations, and requirements.
         </div>
 
+        {/* Transparent Milestone & Refund Trust Banner */}
+        <div className="mt-12 rounded-2xl bg-gradient-to-r from-[#0d1322] via-[#0e0e16] to-[#141108] border border-white/15 p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-3xl">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#d4af37] font-semibold">
+                <ShieldCheck className="w-4 h-4 text-[#d4af37]" />
+                <span>Fair Milestone Structure &middot; 50% Advance &middot; Refundable on Preview</span>
+              </div>
+              <h4 className="font-display text-lg sm:text-xl font-bold text-white">
+                Inspect your live staging demonstration before paying the final balance.
+              </h4>
+              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+                Work begins with a 50% advance milestone. We build your website, provide an interactive preview for your inspection, and complete agreed revisions. If you are unsatisfied with the preview against the agreed scope, you can request a refund of your 50% advance.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <button
+                onClick={() => navigate('/payment-refund-policy')}
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-semibold border border-white/15 transition-all cursor-pointer"
+              >
+                <RefreshCw className="w-3.5 h-3.5 text-[#d4af37]" />
+                <span>Read Payment &amp; Refund Policy &rarr;</span>
+              </button>
+              <button
+                onClick={() => navigate('/terms-of-service')}
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white text-xs font-semibold border border-white/10 transition-all cursor-pointer"
+              >
+                <FileText className="w-3.5 h-3.5 text-[#38bdf8]" />
+                <span>Terms of Service</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Custom Quote Strip below pricing cards */}
-        <div className="mt-14 max-w-3xl mx-auto rounded-2xl bg-[#0e0e13]/85 border border-white/10 p-7 sm:p-9 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left shadow-2xl">
+        <div className="mt-10 max-w-3xl mx-auto rounded-2xl bg-[#0e0e13]/85 border border-white/10 p-7 sm:p-9 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left shadow-2xl">
           <div>
             <h4 className="font-display text-lg sm:text-xl font-bold text-white mb-1">
               Need something different?

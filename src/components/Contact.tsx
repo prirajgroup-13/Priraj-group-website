@@ -541,9 +541,22 @@ export const Contact: React.FC<ContactProps> = ({ preselectedService }) => {
                     )}
                   </button>
 
-                  <div className="text-center pt-2">
-                    <p className="text-[11px] text-neutral-500">
+                  <div className="text-center pt-2 space-y-1">
+                    <p className="text-[11px] text-neutral-400">
                       Dispatched securely to PRIRAJ GROUP engineering &middot; prirajgroup@gmail.com
+                    </p>
+                    <p className="text-[11px] text-neutral-500">
+                      By submitting, you agree to our{' '}
+                      <a href="/privacy-policy" className="text-neutral-400 hover:text-[#d4af37] underline">
+                        Privacy Policy
+                      </a>{' '}
+                      and{' '}
+                      <a href="/terms-of-service" className="text-neutral-400 hover:text-[#d4af37] underline">
+                        Terms of Service
+                      </a>. 50% advance is refundable upon preview inspection under our{' '}
+                      <a href="/payment-refund-policy" className="text-[#d4af37] hover:underline">
+                        Refund Policy
+                      </a>.
                     </p>
                   </div>
                 </form>
