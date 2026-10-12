@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -12,9 +12,9 @@ import {
   Zap,
   Award
 } from 'lucide-react';
-import { FOUNDER_INFO, VALUE_PROPOSITIONS, OFFICIAL_CONTACT } from '../data/content';
+import { VALUE_PROPOSITIONS, OFFICIAL_CONTACT } from '../data/content';
 import { useRouter } from '../router/Router';
-import { Team } from '../components/Team';
+// Team component preserved on home page
 
 interface AboutPageProps {
   onOpenProjectModal: () => void;
@@ -22,7 +22,6 @@ interface AboutPageProps {
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onOpenProjectModal }) => {
   const { navigate } = useRouter();
-  const [imageError, setImageError] = useState(false);
 
   return (
     <div className="relative pt-28 pb-24 px-4 sm:px-6 lg:px-8 z-10">
@@ -59,128 +58,41 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenProjectModal }) => {
           </p>
         </div>
 
-        {/* Section 2: Comprehensive Founder Presentation */}
-        <div className="p-8 sm:p-14 rounded-3xl bg-[#080c16]/90 border border-white/15 backdrop-blur-xl mb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
-            
-            {/* Founder Visual Frame */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative w-full max-w-sm">
-                <div
-                  className="absolute -inset-4 bg-gradient-to-tr from-[#d4af37]/20 via-[#38bdf8]/10 to-transparent rounded-3xl blur-2xl pointer-events-none opacity-80"
-                  aria-hidden="true"
-                />
 
-                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-[#131b2e] to-[#080c16] border border-white/20 p-2 shadow-2xl">
-                  <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-[#06080e] flex items-center justify-center">
-                    {!imageError ? (
-                      <img
-                        src={FOUNDER_INFO.image}
-                        alt={`${FOUNDER_INFO.name} — ${FOUNDER_INFO.role}`}
-                        onError={() => setImageError(true)}
-                        className="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
-                      />
-                    ) : (
-                      /* Editorial Crest Fallback */
-                      <div className="w-full h-full p-8 flex flex-col items-center justify-between text-center bg-gradient-to-b from-[#0c1222] to-[#06080e]">
-                        <div className="w-full flex items-center justify-between text-[10px] font-mono text-[#d4af37] tracking-widest uppercase">
-                          <span>PRIRAJ GROUP</span>
-                          <span>FOUNDER</span>
-                        </div>
-                        <div className="flex flex-col items-center my-auto">
-                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#d4af37] via-[#987223] to-[#221808] p-[2px] shadow-[0_0_30px_0_rgba(212,175,55,0.3)] mb-4">
-                            <div className="w-full h-full rounded-full bg-[#080c16] flex items-center justify-center text-white font-display text-2xl font-bold tracking-wider">
-                              AS
-                            </div>
-                          </div>
-                          <h4 className="font-display text-xl font-bold text-white tracking-wide">
-                            {FOUNDER_INFO.name}
-                          </h4>
-                          <p className="text-xs font-mono text-[#d4af37] tracking-widest uppercase mt-1">
-                            {FOUNDER_INFO.role}
-                          </p>
-                        </div>
-                        <div className="text-[11px] text-neutral-400 font-mono border-t border-white/5 pt-3 w-full">
-                          Executive &amp; Creative Direction
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#06080e] via-transparent to-transparent pointer-events-none" />
-
-                    <div className="absolute bottom-4 left-4 right-4 p-3 rounded-lg bg-black/85 backdrop-blur-md border border-white/10 flex items-center justify-between">
-                      <div>
-                        <div className="text-xs font-bold text-white font-display">
-                          {FOUNDER_INFO.name}
-                        </div>
-                        <div className="text-[10px] font-mono text-[#38bdf8] tracking-wider uppercase font-semibold">
-                          {FOUNDER_INFO.role}
-                        </div>
-                      </div>
-                      <span className="text-[10px] font-mono text-neutral-300 bg-white/5 px-2 py-0.5 rounded border border-white/10">
-                        PRIRAJ GROUP
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Founder Narrative & Perspective */}
-            <div className="lg:col-span-7 flex flex-col items-start text-left">
-              <div className="text-xs font-mono uppercase tracking-widest text-[#38bdf8] mb-2 font-semibold flex items-center gap-2">
+        {/* Section 3: Engineering & Development Capability */}
+        <div className="mb-24 p-8 sm:p-12 rounded-3xl bg-[#090e1c]/80 border border-white/10 backdrop-blur-sm">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 mb-8 border-b border-white/10">
+            <div>
+              <div className="text-xs font-mono font-semibold tracking-widest uppercase text-[#38bdf8] mb-2 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#38bdf8]" />
-                The Person Behind PRIRAJ GROUP
+                STUDIO ENGINEERING &amp; TEAM
               </div>
-
-              <h2 className="font-display text-3xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">
-                {FOUNDER_INFO.name}
-              </h2>
-
-              <div className="text-xs font-mono text-[#d4af37] uppercase tracking-wider font-semibold mb-6 flex items-center gap-2">
-                <span>{FOUNDER_INFO.role}</span>
-                <span>·</span>
-                <span className="text-neutral-300">PRIRAJ GROUP</span>
-              </div>
-
-              {/* Exact Requested Short Description */}
-              <blockquote className="border-l-2 border-[#38bdf8] pl-4 text-base sm:text-lg text-white font-medium leading-relaxed mb-6 italic">
-                &ldquo;Building modern digital experiences with design, technology and real-world usability.&rdquo;
-              </blockquote>
-
-              <p className="text-sm text-neutral-300 leading-relaxed mb-8">
-                Angatdeep Singh is the founder of PRIRAJ GROUP, focused on building modern digital experiences that combine strong design, practical technology and real-world usability. Every digital flagship we engineer is tailored around distinct aesthetic identity, measurable conversion, and lasting technical performance.
-              </p>
-
-              <div className="space-y-3.5 mb-8 w-full">
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-neutral-300">
-                  <CheckCircle2 className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
-                  <span><strong>Direct Founder Accountability:</strong> You work directly with senior engineering and design leadership—never passed down to disconnected junior interns.</span>
-                </div>
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-neutral-300">
-                  <CheckCircle2 className="w-4 h-4 text-[#d4af37] shrink-0 mt-0.5" />
-                  <span><strong>Zero-Template Craft:</strong> Every line of code and UI component is tailored to your business goals and market competition.</span>
-                </div>
-                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-neutral-300">
-                  <CheckCircle2 className="w-4 h-4 text-[#d4af37] shrink-0 mt-0.5" />
-                  <span><strong>Transparent Delivery:</strong> Clear milestones, fixed scopes, and direct communication on WhatsApp and email.</span>
-                </div>
-              </div>
-
-              <button
-                onClick={onOpenProjectModal}
-                className="px-7 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-black bg-[#d4af37] hover:bg-[#e5c07b] transition-all shadow-md cursor-pointer"
-              >
-                Start a Conversation with Us &rarr;
-              </button>
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white">
+                Bespoke Technical Execution
+              </h3>
             </div>
-
+            <button
+              onClick={() => navigate('/#team')}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-semibold uppercase tracking-wider text-[#38bdf8] bg-[#38bdf8]/10 border border-[#38bdf8]/30 hover:bg-[#38bdf8]/20 transition-colors cursor-pointer"
+            >
+              <span>View Our Team Profiles</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           </div>
-        </div>
-
-        {/* Section 3: Our Studio Team */}
-        <div className="mb-24">
-          <Team id="about-team" className="!px-0 !py-0 !bg-transparent" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-neutral-300">
+            <div className="p-6 rounded-2xl bg-[#04060a]/60 border border-white/5 space-y-2">
+              <div className="text-xs font-mono text-[#d4af37] uppercase tracking-wider font-semibold">Leadership &amp; Creative Direction</div>
+              <p className="text-xs text-neutral-400 leading-relaxed">
+                Led by <strong>Angatdeep Singh</strong> (Founder &amp; CEO), driving brand strategy, spatial UI architecture, and direct client accountability.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl bg-[#04060a]/60 border border-white/5 space-y-2">
+              <div className="text-xs font-mono text-[#38bdf8] uppercase tracking-wider font-semibold">Full-Stack Development</div>
+              <p className="text-xs text-neutral-400 leading-relaxed">
+                Engineered with modern React, TypeScript, responsive layouts, and performant web solutions by team member <strong>Chintan Patel</strong>.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Section 4: Studio Core Values */}

@@ -1,13 +1,17 @@
-# THE PERSON BEHIND PRIRAJ GROUP
+# THE PEOPLE BEHIND PRIRAJ GROUP
 
-## ANGATDEEP SINGH
-**Founder & CEO — PRIRAJ GROUP**
+## OUR TEAM
 
-![Angatdeep Singh](WhatsApp Image 2026-10-05 at 3.42.10 PM.jpeg)
+### Profile 01 — Angatdeep Singh
+- **Name:** Angatdeep Singh
+- **Title:** Founder & CEO
+- **Company:** PRIRAJ GROUP
+- **Biography:** "Angatdeep Singh is the Founder & CEO of PRIRAJ GROUP, focused on building modern digital experiences through thoughtful design, practical technology, and real-world usability."
+- **Illustration:** Anime-style Sikh turban portrait (`/assets/anime-angatdeep-singh.jpg`)
 
-> "Building modern digital experiences with design, technology and real-world usability."
-
-### Official Leadership Profile
-- **Founder & CEO:** Angatdeep Singh
-- **Organization:** PRIRAJ GROUP
-- **Mission:** Engineering modern, high-performing digital experiences, business booking engines, and digital products tailored around design poise and operational usability.
+### Profile 02 — Chintan Patel
+- **Name:** Chintan Patel
+- **Title:** Full-Stack Developer
+- **Position:** Team Member
+- **Biography:** "Chintan Patel is a Full-Stack Developer and team member at PRIRAJ GROUP, contributing to the development of modern web experiences and digital solutions."
+- **Illustration:** Anime-style developer portrait (`/assets/anime-chintan-patel.jpg`)

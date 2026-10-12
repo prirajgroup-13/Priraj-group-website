@@ -7,7 +7,6 @@ import { Services } from './components/Services';
 import { Pricing } from './components/Pricing';
 import { Work } from './components/Work';
 import { About } from './components/About';
-import { Founder } from './components/Founder';
 import { Team } from './components/Team';
 import { Process } from './components/Process';
 import { FAQ } from './components/FAQ';
@@ -122,7 +121,6 @@ function AppShell() {
         <Services onSelectService={(s) => handleOpenProjectModal(s)} />
         <Work onOpenProjectModal={(s) => handleOpenProjectModal(s)} />
         <About />
-        <Founder />
         <Team />
         <Process />
         <Pricing

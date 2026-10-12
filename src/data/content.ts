@@ -14,23 +14,23 @@ export const FOUNDER_INFO = {
   name: 'ANGATDEEP SINGH',
   role: 'FOUNDER & CEO',
   company: 'PRIRAJ GROUP',
-  image: '/assets/founder-angatdeep-singh.jpg',
-  fallbackImage: '/assets/founder.jpg',
-  bio: 'Building modern digital experiences with design, technology and real-world usability.',
-  mission: 'Angatdeep Singh is the founder of PRIRAJ GROUP, focused on building modern digital experiences that combine strong design, practical technology and real-world usability. We do not build disposable websites or bloated templates. Every digital flagship we engineer is tailored around distinct aesthetic identity, measurable conversion, and lasting technical performance.'
+  image: '/assets/anime-angatdeep-singh.jpg',
+  fallbackImage: '/src/assets/images/anime_angatdeep_singh_1791831300498.jpg',
+  bio: 'Building modern digital experiences through thoughtful design, practical technology, and real-world usability.',
+  mission: 'Founder of PRIRAJ GROUP, focused on building modern digital experiences through thoughtful design, practical technology, and real-world usability.'
 };
 
 export const TEAM_MEMBERS: TeamMember[] = [
   {
     id: 'angatdeep-singh',
-    name: 'ANGATDEEP SINGH',
+    name: 'Angatdeep Singh',
     title: 'FOUNDER & CEO',
     role: 'Founder & CEO',
     label: 'FOUNDER & CEO',
-    relationship: 'Founder & CEO',
-    photo: '/assets/founder-angatdeep-singh.jpg',
+    relationship: 'PRIRAJ GROUP',
+    photo: '/assets/anime-angatdeep-singh.jpg',
     initials: 'AS',
-    description: 'Angatdeep Singh is the founder of PRIRAJ GROUP, focused on building modern digital experiences that combine strong design, practical technology and real-world usability.',
+    description: 'Angatdeep Singh is the Founder & CEO of PRIRAJ GROUP, focused on building modern digital experiences through thoughtful design, practical technology, and real-world usability.',
     isFounder: true
   },
   {
@@ -40,7 +40,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: 'Full-Stack Developer',
     label: 'TEAM MEMBER',
     relationship: 'Team Member',
-    photo: null,
+    photo: '/assets/anime-chintan-patel.jpg',
     initials: 'CP',
     description: 'Chintan Patel is a Full-Stack Developer and team member at PRIRAJ GROUP, contributing to the development of modern web experiences and digital solutions.',
     isFounder: false
